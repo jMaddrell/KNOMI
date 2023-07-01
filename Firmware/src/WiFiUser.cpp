@@ -24,35 +24,71 @@ String klipper_ip = ""; // 暂时存储KlipperIP
 int connectTimeOut_s = 15; // WiFi连接超时时间，单位秒
 const int LED = 2;         // 设置LED引脚
 
-DNSServer dnsServer;       // 创建dnsServer实例
-WebServer server(webPort); // 开启web服务, 创建TCP SERVER,参数: 端口号,最大连接数
+DNSServer dnsServer; // 创建dnsServer实例
+WebServer
+    server(webPort); // 开启web服务, 创建TCP SERVER,参数: 端口号,最大连接数
 
 // EEPROM参数存储地址位
 int wifi_addr = 1; // 被写入数据的EEPROM地址编号  wifi-ssid-psw klipper
 
-// 如开启WEB配网则可不用设置这里的参数，1为wifi ssid，2为密码，3为klipper ip ，4为 ap模式标志位
+// 如开启WEB配网则可不用设置这里的参数，1为wifi ssid，2为密码，3为klipper ip
+// ，4为 ap模式标志位
 config_type wificonf = {{""}, {""}, {""}, {""}};
 
-// #define ROOT_HTML  "<!DOCTYPE html><html><head><title>WIFI</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><style type=\"text/css\">.input{display: block; margin-top: 10px;}.input span{width: 100px; float: left; float: left; height: 36px; line-height: 36px;}.input input{height: 30px;width: 200px;}.btn{width: 110px; height: 50px; background-color: #438EF0; border-radius:8px; font-size:20px;color:#ffffff;border-color: #438EF0; margin-top:16px; margin-left:104px;}</style><body><form method=\"POST\" action=\"configwifi\"><p><span> BIQU TFT</P><label class=\"input\"><span>WiFi SSID</span><input type=\"text\" name=\"ssid\" value=\"\"></label><label class=\"input\"><span>WiFi PASS</span> <input type=\"text\"  name=\"pass\"><label class=\"input\"><span>Klipper IP</span> <input type=\"text\"  name=\"klipper\"></label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"Submie\"> </form>"
-// #define ROOT_HTML_OK  "<!DOCTYPE html><html><head><title>WIFI SET</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><style type=\"text/css\">.c,body {text-align: center}</style><body><form method=\"POST\" action=\"configwifi\"></label><p><span> submit successfully!</P><p><span> please manually close this page.</P> </form>"
-#define ROOT_HTML "<!DOCTYPE html><html><head><title>WIFI</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><style type=\"text/css\">.input{display: block; margin-top: 10px;}.input span{width: 100px; float: left; float: left; height: 36px; line-height: 36px;}.input input{height: 30px;width: 200px;}.btn{width: 110px; height: 50px; background-color: #438EF0; border-radius:8px; font-size:20px;color:#ffffff;border-color: #438EF0; margin-top:16px; margin-left:104px;}</style><body><form method=\"POST\" action=\"configwifi\"><p><span> KNOMI :-)</P><label class=\"input\"><span>WiFi SSID</span><input type=\"text\" name=\"ssid\" value=\"\"></label><label class=\"input\"><span>WiFi PASS</span> <input type=\"text\"  name=\"pass\"><label class=\"input\"><span>Klipper IP</span> <input type=\"text\"  name=\"klipper\"></label><input class=\"btn\" type=\"submit\" name=\"submit\" value=\"SUBMIT\"> </form>"
-#define ROOT_HTML_OK "<!DOCTYPE html><html><head><title>WIFI SET</title><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"></head><style type=\"text/css\">.c,body {text-align: center}</style><body><form method=\"POST\" action=\"configwifi\"></label><p><span> Submission successful!</P><p><span> You may now close this page.</P> </form>"
+// #define ROOT_HTML  "<!DOCTYPE html><html><head><title>WIFI</title><meta
+// name=\"viewport\" content=\"width=device-width,
+// initial-scale=1\"></head><style type=\"text/css\">.input{display: block;
+// margin-top: 10px;}.input span{width: 100px; float: left; float: left; height:
+// 36px; line-height: 36px;}.input input{height: 30px;width: 200px;}.btn{width:
+// 110px; height: 50px; background-color: #438EF0; border-radius:8px;
+// font-size:20px;color:#ffffff;border-color: #438EF0; margin-top:16px;
+// margin-left:104px;}</style><body><form method=\"POST\"
+// action=\"configwifi\"><p><span> BIQU TFT</P><label class=\"input\"><span>WiFi
+// SSID</span><input type=\"text\" name=\"ssid\" value=\"\"></label><label
+// class=\"input\"><span>WiFi PASS</span> <input type=\"text\"
+// name=\"pass\"><label class=\"input\"><span>Klipper IP</span> <input
+// type=\"text\"  name=\"klipper\"></label><input class=\"btn\" type=\"submit\"
+// name=\"submit\" value=\"Submie\"> </form>" #define ROOT_HTML_OK  "<!DOCTYPE
+// html><html><head><title>WIFI SET</title><meta name=\"viewport\"
+// content=\"width=device-width, initial-scale=1\"></head><style
+// type=\"text/css\">.c,body {text-align: center}</style><body><form
+// method=\"POST\" action=\"configwifi\"></label><p><span> submit
+// successfully!</P><p><span> please manually close this page.</P> </form>"
+#define ROOT_HTML                                                              \
+  "<!DOCTYPE html><html><head><title>WIFI</title><meta name=\"viewport\" "     \
+  "content=\"width=device-width, initial-scale=1\"></head><style "             \
+  "type=\"text/css\">.input{display: block; margin-top: 10px;}.input "         \
+  "span{width: 100px; float: left; float: left; height: 36px; line-height: "   \
+  "36px;}.input input{height: 30px;width: 200px;}.btn{width: 110px; height: "  \
+  "50px; background-color: #438EF0; border-radius:8px; "                       \
+  "font-size:20px;color:#ffffff;border-color: #438EF0; margin-top:16px; "      \
+  "margin-left:104px;}</style><body><form method=\"POST\" "                    \
+  "action=\"configwifi\"><p><span> KNOMI :-)</P><label "                       \
+  "class=\"input\"><span>WiFi SSID</span><input type=\"text\" name=\"ssid\" "  \
+  "value=\"\"></label><label class=\"input\"><span>WiFi PASS</span> <input "   \
+  "type=\"text\"  name=\"pass\"><label class=\"input\"><span>Klipper "         \
+  "IP</span> <input type=\"text\"  name=\"klipper\"></label><input "           \
+  "class=\"btn\" type=\"submit\" name=\"submit\" value=\"SUBMIT\"> </form>"
+#define ROOT_HTML_OK                                                           \
+  "<!DOCTYPE html><html><head><title>WIFI SET</title><meta name=\"viewport\" " \
+  "content=\"width=device-width, initial-scale=1\"></head><style "             \
+  "type=\"text/css\">.c,body {text-align: center}</style><body><form "         \
+  "method=\"POST\" action=\"configwifi\"></label><p><span> Submission "        \
+  "successful!</P><p><span> You may now close this page.</P> </form>"
 /*
  * 处理网站根目录的访问请求
  */
-void handleRoot()
-{
+void handleRoot() {
   // if (server.hasArg("selectSSID")) {
-  //   server.send(200, "text/html", ROOT_HTML + scanNetworksID + "</body></html>");   //scanNetWprksID是扫描到的wifi
+  //   server.send(200, "text/html", ROOT_HTML + scanNetworksID +
+  //   "</body></html>");   //scanNetWprksID是扫描到的wifi
   // } else {
-  //   server.send(200, "text/html", ROOT_HTML + scanNetworksID + "</body></html>");
+  //   server.send(200, "text/html", ROOT_HTML + scanNetworksID +
+  //   "</body></html>");
   // }
-  if (server.hasArg("selectSSID"))
-  {
+  if (server.hasArg("selectSSID")) {
     server.send(200, "text/html", ROOT_HTML);
-  }
-  else
-  {
+  } else {
     server.send(200, "text/html", ROOT_HTML);
   }
 }
@@ -69,63 +105,61 @@ void handleConfigWifi() // 返回http状态
 
     strcpy(wificonf.stassid, wifi_ssid.c_str()); // 名称复制
     Serial.println(wifi_ssid);
-  }
-  else // 没有参数
+  } else // 没有参数
   {
     Serial.println("error, not found ssid");
-    server.send(200, "text/html", "<meta charset='UTF-8'>error, not found ssid"); // 返回错误页面
+    server.send(200, "text/html",
+                "<meta charset='UTF-8'>error, not found ssid"); // 返回错误页面
     return;
   }
   // 密码与账号同理
-  if (server.hasArg("pass"))
-  {
+  if (server.hasArg("pass")) {
     Serial.print("got password:");
     wifi_pass = server.arg("pass"); // 获取html表单输入框name名为"pwd"的内容
 
     strcpy(wificonf.stapsw, wifi_pass.c_str()); // 名称复制
     Serial.println(wifi_pass);
-  }
-  else
-  {
+  } else {
     Serial.println("error, not found password");
-    server.send(200, "text/html", "<meta charset='UTF-8'>error, not found password");
+    server.send(200, "text/html",
+                "<meta charset='UTF-8'>error, not found password");
     return;
   }
   // klipper ip
-  if (server.hasArg("klipper"))
-  {
+  if (server.hasArg("klipper")) {
     Serial.print("got KlipperIP:");
-    klipper_ip = server.arg("klipper"); // 获取html表单输入框name名为"KlipperIP"的内容
+    klipper_ip =
+        server.arg("klipper"); // 获取html表单输入框name名为"KlipperIP"的内容
 
     strcpy(wificonf.klipperip, klipper_ip.c_str()); // 名称复制
 
     wificonf.apmodeflag[0] = '8'; // 8 STA模式
 
     Serial.println(klipper_ip);
-  }
-  else
-  {
+  } else {
     Serial.println("error, not found klipper ip");
-    server.send(200, "text/html", "<meta charset='UTF-8'>error, not found klipper ip");
+    server.send(200, "text/html",
+                "<meta charset='UTF-8'>error, not found klipper ip");
     return;
   }
   delay(200);
 
-  // server.send(200, "text/html", "<meta charset='UTF-8'>SSID：" + wifi_ssid + "<br />password:" + wifi_pass + "<br />Trying to connect Trying to connect, please manually close this page."); //返回保存成功页面
+  // server.send(200, "text/html", "<meta charset='UTF-8'>SSID：" + wifi_ssid +
+  // "<br />password:" + wifi_pass + "<br />Trying to connect Trying to connect,
+  // please manually close this page."); //返回保存成功页面
   server.send(200, "text/html", ROOT_HTML_OK); // 返回保存成功页面
   delay(2000);
-  WiFi.softAPdisconnect(true); // 参数设置为true，设备将直接关闭接入点模式，即关闭设备所建立的WiFi网络。
-  server.close();              // 关闭web服务
-  WiFi.softAPdisconnect();     // 在不输入参数的情况下调用该函数,将关闭接入点模式,并将当前配置的AP热点网络名和密码设置为空值.
+  WiFi.softAPdisconnect(
+      true); // 参数设置为true，设备将直接关闭接入点模式，即关闭设备所建立的WiFi网络。
+  server.close();          // 关闭web服务
+  WiFi.softAPdisconnect(); // 在不输入参数的情况下调用该函数,将关闭接入点模式,并将当前配置的AP热点网络名和密码设置为空值.
   Serial.println("WiFi Connect SSID:" + wifi_ssid + "  PASS:" + wifi_pass);
 
   if (WiFi.status() != WL_CONNECTED) // wifi没有连接成功
   {
     Serial.println("开始调用连接函数connectToWiFi()..");
     connectToWiFi(connectTimeOut_s);
-  }
-  else
-  {
+  } else {
     Serial.println("提交的配置信息自动连接成功..");
   }
 }
@@ -142,19 +176,19 @@ void handleNotFound() // 当浏览器请求的网络资源无法在服务器找�
 /*
  * 进入AP模式
  */
-void initSoftAP()
-{
-  WiFi.mode(WIFI_AP);                                         // 配置为AP模式
-  WiFi.softAPConfig(apIP, apIP, IPAddress(255, 255, 255, 0)); // 设置AP热点IP和子网掩码
-  if (WiFi.softAP(AP_SSID))                                   // 开启AP热点,如需要密码则添加第二个参数
+void initSoftAP() {
+  WiFi.mode(WIFI_AP); // 配置为AP模式
+  WiFi.softAPConfig(apIP, apIP,
+                    IPAddress(255, 255, 255, 0)); // 设置AP热点IP和子网掩码
+  if (WiFi.softAP(AP_SSID)) // 开启AP热点,如需要密码则添加第二个参数
   {
     // 打印相关信息
     Serial.println("ESP-32S SoftAP is right.");
     Serial.print("Soft-AP IP address = ");
-    Serial.println(WiFi.softAPIP());                                            // 接入点ip
-    Serial.println(String("MAC address = ") + WiFi.softAPmacAddress().c_str()); // 接入点mac
-  }
-  else // 开启AP热点失败
+    Serial.println(WiFi.softAPIP()); // 接入点ip
+    Serial.println(String("MAC address = ") +
+                   WiFi.softAPmacAddress().c_str()); // 接入点mac
+  } else                                             // 开启AP热点失败
   {
     Serial.println("WiFiAP Failed");
     delay(1000);
@@ -166,14 +200,12 @@ void initSoftAP()
 /*
  * 开启DNS服务器
  */
-void initDNS()
-{
-  if (dnsServer.start(DNS_PORT, "*", apIP)) // 判断将所有地址映射到esp32的ip上是否成功
+void initDNS() {
+  if (dnsServer.start(DNS_PORT, "*",
+                      apIP)) // 判断将所有地址映射到esp32的ip上是否成功
   {
     Serial.println("start dnsserver success.");
-  }
-  else
-  {
+  } else {
     Serial.println("start dnsserver failed.");
   }
 }
@@ -181,17 +213,21 @@ void initDNS()
 /*
  * 初始化WebServer
  */
-void initWebServer()
-{
+void initWebServer() {
   if (MDNS.begin("esp32")) // 给设备设定域名esp32,完整的域名是esp32.local
   {
     Serial.println("MDNS responder started");
   }
   // 必须添加第二个参数HTTP_GET，以下面这种格式去写，否则无法强制门户
-  server.on("/", HTTP_GET, handleRoot);                  //  当浏览器请求服务器根目录(网站首页)时调用自定义函数handleRoot处理，设置主页回调函数，必须添加第二个参数HTTP_GET，否则无法强制门户
-  server.on("/configwifi", HTTP_POST, handleConfigWifi); //  当浏览器请求服务器/configwifi(表单字段)目录时调用自定义函数handleConfigWifi处理
+  server.on(
+      "/", HTTP_GET,
+      handleRoot); //  当浏览器请求服务器根目录(网站首页)时调用自定义函数handleRoot处理，设置主页回调函数，必须添加第二个参数HTTP_GET，否则无法强制门户
+  server.on(
+      "/configwifi", HTTP_POST,
+      handleConfigWifi); //  当浏览器请求服务器/configwifi(表单字段)目录时调用自定义函数handleConfigWifi处理
 
-  server.onNotFound(handleNotFound); // 当浏览器请求的网络资源无法在服务器找到时调用自定义函数handleNotFound处理
+  server.onNotFound(
+      handleNotFound); // 当浏览器请求的网络资源无法在服务器找到时调用自定义函数handleNotFound处理
 
   server.begin(); // 启动TCP SERVER
 
@@ -201,25 +237,20 @@ void initWebServer()
 /*
  * 扫描附近的WiFi，为了显示在配网界面
  */
-bool scanWiFi()
-{
+bool scanWiFi() {
   Serial.println("scan start");
   Serial.println("--------->");
   // 扫描附近WiFi
   int n = WiFi.scanNetworks();
   Serial.println("scan done");
-  if (n == 0)
-  {
+  if (n == 0) {
     Serial.println("no networks found");
     scanNetworksID = "no networks found";
     return false;
-  }
-  else
-  {
+  } else {
     Serial.print(n);
     Serial.println(" networks found");
-    for (int i = 0; i < n; ++i)
-    {
+    for (int i = 0; i < n; ++i) {
       // Print SSID and RSSI for each network found
       Serial.print(i + 1);
       Serial.print(": ");
@@ -246,8 +277,7 @@ bool scanWiFi()
 /*
  * 连接WiFi
  */
-void connectToWiFi(int timeOut_s)
-{
+void connectToWiFi(int timeOut_s) {
   WiFi.hostname(HOST_NAME); // 设置设备名
   Serial.println("进入connectToWiFi()函数");
   WiFi.mode(WIFI_STA);       // 设置为STA模式并连接WIFI
@@ -256,18 +286,20 @@ void connectToWiFi(int timeOut_s)
   if (wifi_ssid != "") // wifi_ssid不为空，意味着从网页读取到wifi
   {
     Serial.println("用web配置信息连接.");
-    WiFi.begin(wifi_ssid.c_str(), wifi_pass.c_str()); // c_str(),获取该字符串的指针
+    WiFi.begin(wifi_ssid.c_str(),
+               wifi_pass.c_str()); // c_str(),获取该字符串的指针
     wifi_ssid = "";
     wifi_pass = "";
-  }
-  else // 未从网页读取到wifi
+  } else // 未从网页读取到wifi
   {
     readwificonfig();
     Serial.println("用EEROM保存的信息连接.");
-    WiFi.begin(wificonf.stassid, wificonf.stapsw); // begin()不传入参数，默认连接上一次连接成功的wifi
+    WiFi.begin(
+        wificonf.stassid,
+        wificonf.stapsw); // begin()不传入参数，默认连接上一次连接成功的wifi
   }
 
-  int Connect_time = 0;                 // 用于连接计时，如果长时间连接不成功，复位设备
+  int Connect_time = 0; // 用于连接计时，如果长时间连接不成功，复位设备
   while (WiFi.status() != WL_CONNECTED) // 等待WIFI连接成功
   {
     Serial.print("."); // 一共打印30个点点
@@ -286,8 +318,7 @@ void connectToWiFi(int timeOut_s)
       return; // 跳出 防止无限初始化
     }
 
-    if (test_mode_flag == 1)
-    { // 测试模式直接退出
+    if (test_mode_flag == 1) { // 测试模式直接退出
 
       return;
     }
@@ -323,8 +354,7 @@ void connectToWiFi(int timeOut_s)
 /*
  * 配置配网功能
  */
-void wifiConfig()
-{
+void wifiConfig() {
   initSoftAP();
   initDNS();
   initWebServer();
@@ -334,8 +364,7 @@ void wifiConfig()
 /*
  * 测试时使用
  */
-void wifiConfig_test()
-{
+void wifiConfig_test() {
   initSoftAP();
   initDNS();
   initWebServer();
@@ -345,8 +374,7 @@ void wifiConfig_test()
 /*
  * 删除保存的wifi信息，这里的删除是删除存储在flash的信息。删除后wifi读不到上次连接的记录，需重新配网
  */
-void restoreWiFi()
-{
+void restoreWiFi() {
   delay(500);
   esp_wifi_restore(); // 删除保存的wifi信息
   Serial.println("连接信息已清空,准备重启设备..");
@@ -356,12 +384,10 @@ void restoreWiFi()
 }
 
 // wifi ssid，psw保存到eeprom
-void savewificonfig()
-{
+void savewificonfig() {
   // 开始写入
   uint8_t *p = (uint8_t *)(&wificonf);
-  for (int i = 0; i < sizeof(wificonf); i++)
-  {
+  for (int i = 0; i < sizeof(wificonf); i++) {
     EEPROM.write(i + wifi_addr, *(p + i)); // 在闪存内模拟写入
   }
   delay(10);
@@ -370,12 +396,11 @@ void savewificonfig()
 }
 
 // 删除原有eeprom中的信息
-void deletewificonfig()
-{
-  config_type deletewifi = {{""}, {""}, {""}, {"5"}}; // 5 AP模式标志位 ， 8 STA模式
+void deletewificonfig() {
+  config_type deletewifi = {
+      {""}, {""}, {""}, {"5"}}; // 5 AP模式标志位 ， 8 STA模式
   uint8_t *p = (uint8_t *)(&deletewifi);
-  for (int i = 0; i < sizeof(deletewifi); i++)
-  {
+  for (int i = 0; i < sizeof(deletewifi); i++) {
     EEPROM.write(i + wifi_addr, *(p + i)); // 在闪存内模拟写入
   }
   delay(10);
@@ -384,11 +409,9 @@ void deletewificonfig()
 }
 
 // 从eeprom读取WiFi信息ssid，psw
-void readwificonfig()
-{
+void readwificonfig() {
   uint8_t *p = (uint8_t *)(&wificonf);
-  for (int i = 0; i < sizeof(wificonf); i++)
-  {
+  for (int i = 0; i < sizeof(wificonf); i++) {
     *(p + i) = EEPROM.read(i + wifi_addr);
   }
   // EEPROM.commit();
@@ -402,14 +425,13 @@ void readwificonfig()
 /*
  * 检查wifi是否已经连接
  */
-void checkConnect(bool reConnect)
-{
+void checkConnect(bool reConnect) {
   if (WiFi.status() != WL_CONNECTED) // wifi连接失败
   {
     // if (digitalRead(LED) != LOW)
     //   digitalWrite(LED, LOW);
-    if (reConnect == true && WiFi.getMode() != WIFI_AP && WiFi.getMode() != WIFI_AP_STA)
-    {
+    if (reConnect == true && WiFi.getMode() != WIFI_AP &&
+        WiFi.getMode() != WIFI_AP_STA) {
       Serial.println("WIFI未连接.");
       Serial.println("WiFi Mode:");
       Serial.println(WiFi.getMode());
@@ -445,8 +467,7 @@ void checkConnect(bool reConnect)
 /*
  * 检测客户端DNS&HTTP请求
  */
-void checkDNS_HTTP()
-{
+void checkDNS_HTTP() {
   dnsServer.processNextRequest(); // 检查客户端DNS请求
   server.handleClient();          // 检查客户端(浏览器)http请求
 }

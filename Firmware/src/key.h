@@ -14,7 +14,8 @@
 
 #define KEY_DWON 1 // 按键接通
 
-extern uint8_t KeyDownFlag; // 按键按下标志位，避免其它任务占用过长时间影响按键判断
+extern uint8_t
+    KeyDownFlag; // 按键按下标志位，避免其它任务占用过长时间影响按键判断
 
 void KeyScan();
 void InitKeyInterface();
