@@ -904,7 +904,8 @@ void setup()
   }
 }
 
-enum http_request_type {
+enum http_request_type
+{
   TEMPERATURE,
   PRINT_PROGRESS,
   HOMING,
@@ -997,9 +998,7 @@ void loop()
           deserializeJson(doc, payload);
 
           if (requestType == TEMPERATURE)
-          { // 喷头热床温度显示
-          // 1 = tempreature display
-
+          {
             String bedTempActual = doc["temperature"]["bed"]["actual"].as<String>();
             String bedTempTarget = doc["temperature"]["bed"]["target"].as<String>();
             String toolTempActual = doc["temperature"]["tool0"]["actual"].as<String>();
@@ -1021,7 +1020,7 @@ void loop()
             text_ext_target_temp = toolTempTarget + "°C";
             text_bed_actual_temp = bedTempActual + "°C";
             text_bed_target_temp = bedTempTarget + "°C";
-            
+
             if (statusPrinting == "true")
             {
               text_print_status = "Printing";
@@ -1077,7 +1076,7 @@ void loop()
 
             progress_data = datas;
             nameStrpriting = String(datas);
-            
+
             Serial.println(nameStrpriting);
 
             requestType = HOMING;
@@ -1124,7 +1123,8 @@ void loop()
         else
         {
 
-          if (screen_no_klipper_dis_flg < 10) {
+          if (screen_no_klipper_dis_flg < 10)
+          {
             screen_no_klipper_dis_flg++;
           }
 
