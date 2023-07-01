@@ -47,7 +47,6 @@ uint32_t netcheck_nexttime = 0;
 uint32_t httprequest_nowtime = 0;
 uint32_t httprequest_nexttime = 0;
 
-String to_String(int n);
 Ticker timer1;
 Ticker timer2;
 
@@ -63,35 +62,6 @@ int16_t fanspeed_data = 0;
 
 //----------------------------------------//
 using namespace std;
-#define max 100
-String to_String(int n)
-{
-  int m = n;
-  char s[max];
-  char ss[max];
-  int i = 0, j = 0;
-  if (n < 0)
-  {
-    m = 0 - m;
-    j = 1;
-    ss[0] = '-';
-  }
-
-  while (m > 0)
-  {
-    s[i++] = m % 10 + '0';
-    m /= 10;
-  }
-
-  s[i] = '\0';
-  i = i - 1;
-  while (i >= 0)
-  {
-    ss[j++] = s[i--];
-  }
-  ss[j] = '\0';
-  return ss;
-}
 
 //--------------------------------------screen1---初始化----------------------------------------------//
 void init_label_print_status()
@@ -104,7 +74,7 @@ void init_label_print_status()
 
 void init_label_print_progress()
 {
-  String TEXT = to_String(progress_data);
+  String TEXT = String(progress_data);
 
   label_print_progress = lv_label_create(lv_scr_act()); // 创建文字对象
 
@@ -284,7 +254,7 @@ void init_label_no_klipper()
 //----------------------------------------screen6----初始化------------------------------------------------------//
 void init_label_fan_speed()
 {
-  String TEXT = to_String(fanspeed_data);
+  String TEXT = String(fanspeed_data);
 
   label_fan_speed = lv_label_create(lv_scr_act()); // 创建文字对象
 
@@ -321,17 +291,7 @@ void update_label_print_status()
 
 void update_label_print_progress()
 {
-
-  String TEXT = to_String(progress_data);
-
-  if (progress_data == 0)
-  {
-    TEXT = "0%";
-  }
-  else
-  {
-    TEXT = TEXT + "%";
-  }
+  String TEXT = String(progress_data) + "%";
 
   label_print_progress = lv_label_create(lv_scr_act()); // 创建文字对象
 
@@ -342,7 +302,6 @@ void update_label_print_progress()
 
 void update_arc_print_progress()
 {
-
   arc_print_progress = lv_arc_create(lv_scr_act()); // 创建圆弧对象
 
   lv_style_set_arc_width(&style_arc_print_progress, 24);                              // 设置样式的圆弧粗细
@@ -473,16 +432,7 @@ void update_label_no_klipper()
 //----------------------------------------screen6---刷新-------------------------------------------------------//
 void update_label_fan_speed()
 {
-  String TEXT = to_String(fanspeed_data);
-
-  if (fanspeed_data == 0)
-  {
-    TEXT = "fan speed: 0%";
-  }
-  else
-  {
-    TEXT = "fan speed: " + TEXT + "%";
-  }
+  String TEXT = "fan speed: " + String(fanspeed_data) + "%";
 
   label_fan_speed = lv_label_create(lv_scr_act()); // 创建文字对象
 
@@ -1123,14 +1073,8 @@ void loop()
             }
 
             progress_data = datas;
-            if (datas == 0)
-            {
-              nameStrpriting = "0";
-            }
-            else
-            {
-              nameStrpriting = to_String(datas);
-            }
+            nameStrpriting = String(datas);
+            
             Serial.println(nameStrpriting);
 
             httpswitch = 3;
