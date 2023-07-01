@@ -58,6 +58,10 @@ int16_t progress_data = 0;
 // 风扇转速百分比变量定义
 int16_t fanspeed_data = 0;
 
+enum http_request_type { TEMPERATURE, PRINT_PROGRESS, HOMING, LEVELING };
+
+enum http_request_type requestType = TEMPERATURE;
+
 //----------------------------------------//
 using namespace std;
 
@@ -636,10 +640,6 @@ void setup() {
     wifiConfig(); // 开始配网功能
   }
 }
-
-enum http_request_type { TEMPERATURE, PRINT_PROGRESS, HOMING, LEVELING };
-
-enum http_request_type requestType = TEMPERATURE;
 
 void loop() {
   // lv_tick_inc(1);/* le the GUI do its work */
