@@ -122,19 +122,11 @@ void update_label_no_klipper();
 void update_label_fan_speed();
 
 // 界面对象刷新处理函数定义
-void update_screen1(lv_timer_t *timer);
-void update_screen2(lv_timer_t *timer);
-void update_screen3(lv_timer_t *timer);
-void update_screen4(lv_timer_t *timer);
-void update_screen5(lv_timer_t *timer);
-void update_screen6(lv_timer_t *timer);
-void update_screen7(lv_timer_t *timer);
-void update_screen8(lv_timer_t *timer);
-void update_screen9(lv_timer_t *timer);
-void update_screen10(lv_timer_t *timer);
-void update_screen11(lv_timer_t *timer);
-void update_screen12(lv_timer_t *timer);
-void update_screen13(lv_timer_t *timer);
+void update_print_progress(lv_timer_t *timer);
+void update_standby(lv_timer_t *timer);
+void update_printing(lv_timer_t *timer);
+void update_bed_temp(lv_timer_t *timer);
+void update_extruder_status(lv_timer_t *timer);
 
 // 删除界面对象
 void delete_exist_object();

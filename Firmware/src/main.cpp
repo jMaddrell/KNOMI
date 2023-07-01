@@ -489,7 +489,7 @@ void update_bar_fan_speed() {
 }
 
 //-----------------------------------------------------------------------------------------------------//
-void update_screen1(lv_timer_t *timer) {
+void update_print_progress(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_label_print_progress();
   update_arc_print_progress();
@@ -497,62 +497,21 @@ void update_screen1(lv_timer_t *timer) {
   exist_object_screen_flg = 1;
 }
 
-void update_screen2(lv_timer_t *timer) {}
-
-void update_screen3(lv_timer_t *timer) {
-  update_label_print_file();
-
-  exist_object_screen_flg = 3;
-}
-
-void update_screen4(lv_timer_t *timer) {
-  update_label_ap_config();
-
-  exist_object_screen_flg = 4;
-}
-
-void update_screen5(lv_timer_t *timer) {
-  update_label_no_klipper();
-
-  exist_object_screen_flg = 5;
-}
-
-void update_screen6(lv_timer_t *timer) {
-  update_label_fan_speed();
-  update_bar_fan_speed();
-
-  exist_object_screen_flg = 6;
-}
-
-void update_screen7(lv_timer_t *timer) {
+void update_standby(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_Standby_display();
 
   exist_object_screen_flg = 7;
 }
 
-void update_screen8(lv_timer_t *timer) {
-  update_gif_black_back_display();
-  update_gif_StartPrinting_display();
-
-  exist_object_screen_flg = 8;
-}
-
-void update_screen9(lv_timer_t *timer) {
+void update_printing(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_Printing_display();
 
   exist_object_screen_flg = 9;
 }
 
-void update_screen10(lv_timer_t *timer) {
-  update_gif_black_back_display();
-  update_gif_PrintComplete_display();
-
-  exist_object_screen_flg = 10;
-}
-
-void update_screen11(lv_timer_t *timer) {
+void update_bed_temp(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_bed_temp_display();
   update_label_heaterbed_actual_temp();
@@ -561,7 +520,7 @@ void update_screen11(lv_timer_t *timer) {
   exist_object_screen_flg = 11;
 }
 
-void update_screen12(lv_timer_t *timer) {
+void update_extruder_status(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_ext_temp_display();
   update_label_extruder_actual_temp();
@@ -570,80 +529,52 @@ void update_screen12(lv_timer_t *timer) {
   exist_object_screen_flg = 12;
 }
 
-void update_screen13(lv_timer_t *timer) {}
-
-void update_screen14(lv_timer_t *timer) {
+void update_print_complete(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_OK_display();
 
   exist_object_screen_flg = 14;
 }
 
-void update_screen15(lv_timer_t *timer) {
+void update_voron(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_voron_display();
 
   exist_object_screen_flg = 15;
 }
 
-void update_screen18(lv_timer_t *timer) {
+void update_before_printing(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_BeforePrinting_display();
 
   exist_object_screen_flg = 18;
 }
 
-void update_screen19(lv_timer_t *timer) {
+void update_after_printing(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_AfterPrinting_display();
 
   exist_object_screen_flg = 19;
 }
 
-void update_screen20(lv_timer_t *timer) {
-  update_gif_AP_Config_back_display();
-  update_gif_AP_Config_display();
-
-  exist_object_screen_flg = 20;
-}
-
-void update_screen21(lv_timer_t *timer) {
+void update_homing(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_Home_display();
 
   exist_object_screen_flg = 21;
 }
 
-void update_screen22(lv_timer_t *timer) {
+void update_leveling(lv_timer_t *timer) {
   update_gif_black_back_display();
   update_gif_levelling_display();
 
   exist_object_screen_flg = 22;
 }
 
-void update_screen23(lv_timer_t *timer) {
+void update_wait(lv_timer_t *timer) {
   update_gif_wait_back_display();
 
   exist_object_screen_flg = 23;
-}
-
-//-----------------------------------------------------------//
-void update_screen16(lv_timer_t *timer) {
-  if (exist_object_screen_flg == 11) {
-    lv_obj_del(label_bed_actual_temp);
-    lv_obj_del(label_bed_target_temp);
-    update_label_heaterbed_actual_temp();
-    update_label_heaterbed_target_temp();
-  }
-}
-
-void update_screen17(lv_timer_t *timer) {
-  if (exist_object_screen_flg == 12) {
-    lv_obj_del(label_ext_actual_temp);
-    lv_obj_del(label_ext_target_temp);
-    update_label_extruder_actual_temp();
-    update_label_extruder_target_temp();
-  }
 }
 
 //------------------------------------------------------------------------------------------------------------//
@@ -734,9 +665,7 @@ void delete_exist_object() {
     lv_obj_del(img_black_back);
     lv_obj_del(gif_Printing);
   } else if (exist_object_screen_flg == 10) {
-
-    lv_obj_del(img_black_back);
-    lv_obj_del(gif_PrintComplete);
+    // PrintComplete
   } else if (exist_object_screen_flg == 11) {
 
     lv_obj_del(img_black_back);
@@ -781,7 +710,6 @@ void delete_exist_object() {
   } else if (exist_object_screen_flg == 23) {
 
     lv_obj_del(gif_wait_back);
-  } else {
   }
 }
 
@@ -1114,7 +1042,7 @@ void loop() {
               standby_voron_dis_flg = 1;
 
               delete_exist_object();
-              update_timer = lv_timer_create(update_screen7, 0, NULL);
+              update_timer = lv_timer_create(update_standby, 0, NULL);
               lv_timer_set_repeat_count(update_timer, 1);
             } else {
               display_step = 11; // to voron
@@ -1141,7 +1069,7 @@ void loop() {
               standby_voron_dis_flg = 0;
 
               delete_exist_object();
-              update_timer = lv_timer_create(update_screen15, 0, NULL);
+              update_timer = lv_timer_create(update_voron, 0, NULL);
               lv_timer_set_repeat_count(update_timer, 1);
             } else {
               display_step = 2; // to Standby
@@ -1157,7 +1085,7 @@ void loop() {
             timer_contne = 1;
           } else {
             delete_exist_object();
-            update_timer = lv_timer_create(update_screen21, 0, NULL);
+            update_timer = lv_timer_create(update_homing, 0, NULL);
             lv_timer_set_repeat_count(update_timer, 1);
           }
         }
@@ -1169,7 +1097,7 @@ void loop() {
             display_step = 2;
           } else {
             delete_exist_object();
-            update_timer = lv_timer_create(update_screen22, 0, NULL);
+            update_timer = lv_timer_create(update_leveling, 0, NULL);
             lv_timer_set_repeat_count(update_timer, 1);
           }
         }
@@ -1185,7 +1113,7 @@ void loop() {
               display_step = 4;
             } else {
               delete_exist_object();
-              update_timer = lv_timer_create(update_screen11, 0,
+              update_timer = lv_timer_create(update_bed_temp, 0,
                                              NULL); // BED
               lv_timer_set_repeat_count(update_timer, 1);
             }
@@ -1202,8 +1130,8 @@ void loop() {
             } else {
               display_step = 9;
               delete_exist_object();
-              update_timer =
-                  lv_timer_create(update_screen18, 0, NULL); // BeforePrinting
+              update_timer = lv_timer_create(update_before_printing, 0,
+                                             NULL); // BeforePrinting
               lv_timer_set_repeat_count(update_timer, 1);
             }
           } else {
@@ -1212,7 +1140,7 @@ void loop() {
               display_step = 9;
             } else {
               delete_exist_object();
-              update_timer = lv_timer_create(update_screen12, 0,
+              update_timer = lv_timer_create(update_extruder_status, 0,
                                              NULL); // EXT
               lv_timer_set_repeat_count(update_timer, 1);
             }
@@ -1232,20 +1160,20 @@ void loop() {
               display_step = 6;
               timer_contne = 7;
               delete_exist_object();
-              update_timer = lv_timer_create(update_screen14, 0,
+              update_timer = lv_timer_create(update_print_complete, 0,
                                              NULL); // print_ok
               lv_timer_set_repeat_count(update_timer, 1);
             } else {
 
               if (progress_data >= 1) {
                 delete_exist_object();
-                update_timer =
-                    lv_timer_create(update_screen1, 0, NULL); // 过1%显示进度
+                update_timer = lv_timer_create(update_print_progress, 0,
+                                               NULL); // 过1%显示进度
                 lv_timer_set_repeat_count(update_timer, 1);
               } else {
                 delete_exist_object();
                 update_timer =
-                    lv_timer_create(update_screen9, 0, NULL); // printing
+                    lv_timer_create(update_printing, 0, NULL); // printing
                 lv_timer_set_repeat_count(update_timer, 1);
               }
             }
@@ -1259,7 +1187,7 @@ void loop() {
           display_step = 10;
 
           delete_exist_object();
-          update_timer = lv_timer_create(update_screen19, 0,
+          update_timer = lv_timer_create(update_after_printing, 0,
                                          NULL); // AfterPrinting
           lv_timer_set_repeat_count(update_timer, 1);
         }
@@ -1276,7 +1204,7 @@ void loop() {
             display_step = 2;
           } else {
             delete_exist_object();
-            update_timer = lv_timer_create(update_screen23, 0, NULL);
+            update_timer = lv_timer_create(update_wait, 0, NULL);
             lv_timer_set_repeat_count(update_timer, 1);
           }
         }

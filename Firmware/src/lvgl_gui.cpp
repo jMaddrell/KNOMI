@@ -129,7 +129,7 @@ void project_task_init(lv_timer_t *timer) {
   timer_contne = 1;
 
   delete_exist_object();
-  update_timer = lv_timer_create(update_screen7, 0, NULL);
+  update_timer = lv_timer_create(update_standby, 0, NULL);
   lv_timer_set_repeat_count(update_timer, 1);
 
   screen_begin_dis_flg = 1;
