@@ -165,47 +165,47 @@ void init_label_heaterbed_target_temp() {
   lv_obj_align(label_bed_target_temp, LV_ALIGN_CENTER, 0, -75); // 居中显示
 }
 
-void init_arc_extruder_temp() {
-  arc_extruder_temp = lv_arc_create(lv_scr_act()); // 创建圆弧对象
+// void init_arc_extruder_temp() {
+//   arc_extruder_temp = lv_arc_create(lv_scr_act()); // 创建圆弧对象
 
-  lv_style_set_arc_width(&style_arc_extruder_temp, 8); // 设置样式的圆弧粗细
-  lv_obj_add_style(arc_extruder_temp, &style_arc_extruder_temp,
-                   LV_PART_MAIN); // 将样式应用到圆弧背景
-  lv_obj_add_style(arc_extruder_temp, &style_arc_extruder_temp,
-                   LV_PART_INDICATOR); // 将样式应用到圆弧前景
+//   lv_style_set_arc_width(&style_arc_extruder_temp, 8); // 设置样式的圆弧粗细
+//   lv_obj_add_style(arc_extruder_temp, &style_arc_extruder_temp,
+//                    LV_PART_MAIN); // 将样式应用到圆弧背景
+//   lv_obj_add_style(arc_extruder_temp, &style_arc_extruder_temp,
+//                    LV_PART_INDICATOR); // 将样式应用到圆弧前景
 
-  lv_obj_remove_style(arc_extruder_temp, NULL, LV_PART_KNOB); // 移除样式
-  lv_obj_clear_flag(arc_extruder_temp, LV_OBJ_FLAG_CLICKABLE);
-  lv_obj_set_style_arc_color(arc_extruder_temp,
-                             lv_palette_main(LV_PALETTE_ORANGE),
-                             LV_PART_INDICATOR);   // 进度条颜色
-  lv_obj_set_size(arc_extruder_temp, 240, 240);    // 设置尺寸
-  lv_arc_set_rotation(arc_extruder_temp, 270);     // 设置零度位置
-  lv_arc_set_bg_angles(arc_extruder_temp, 0, 360); // 设置角度
-  lv_arc_set_value(arc_extruder_temp, 100);        // 设置初始值
-  lv_obj_center(arc_extruder_temp);                // 居中显示
-}
+//   lv_obj_remove_style(arc_extruder_temp, NULL, LV_PART_KNOB); // 移除样式
+//   lv_obj_clear_flag(arc_extruder_temp, LV_OBJ_FLAG_CLICKABLE);
+//   lv_obj_set_style_arc_color(arc_extruder_temp,
+//                              lv_palette_main(LV_PALETTE_ORANGE),
+//                              LV_PART_INDICATOR);   // 进度条颜色
+//   lv_obj_set_size(arc_extruder_temp, 240, 240);    // 设置尺寸
+//   lv_arc_set_rotation(arc_extruder_temp, 270);     // 设置零度位置
+//   lv_arc_set_bg_angles(arc_extruder_temp, 0, 360); // 设置角度
+//   lv_arc_set_value(arc_extruder_temp, 100);        // 设置初始值
+//   lv_obj_center(arc_extruder_temp);                // 居中显示
+// }
 
-void init_arc_heaterbed_temp() {
-  arc_heaterbed_temp = lv_arc_create(lv_scr_act()); // 创建圆弧对象
+// void init_arc_heaterbed_temp() {
+//   arc_heaterbed_temp = lv_arc_create(lv_scr_act()); // 创建圆弧对象
 
-  lv_style_set_arc_width(&style_arc_heaterbed_temp, 8); // 设置样式的圆弧粗细
-  lv_obj_add_style(arc_heaterbed_temp, &style_arc_heaterbed_temp,
-                   LV_PART_MAIN); // 将样式应用到圆弧背景
-  lv_obj_add_style(arc_heaterbed_temp, &style_arc_heaterbed_temp,
-                   LV_PART_INDICATOR); // 将样式应用到圆弧前景
+//   lv_style_set_arc_width(&style_arc_heaterbed_temp, 8); // 设置样式的圆弧粗细
+//   lv_obj_add_style(arc_heaterbed_temp, &style_arc_heaterbed_temp,
+//                    LV_PART_MAIN); // 将样式应用到圆弧背景
+//   lv_obj_add_style(arc_heaterbed_temp, &style_arc_heaterbed_temp,
+//                    LV_PART_INDICATOR); // 将样式应用到圆弧前景
 
-  lv_obj_remove_style(arc_heaterbed_temp, NULL, LV_PART_KNOB); // 移除样式
-  lv_obj_clear_flag(arc_heaterbed_temp, LV_OBJ_FLAG_CLICKABLE);
-  lv_obj_set_style_arc_color(arc_heaterbed_temp,
-                             lv_palette_main(LV_PALETTE_TEAL),
-                             LV_PART_INDICATOR);    // 进度条颜色
-  lv_obj_set_size(arc_heaterbed_temp, 224, 224);    // 设置尺寸
-  lv_arc_set_rotation(arc_heaterbed_temp, 270);     // 设置零度位置
-  lv_arc_set_bg_angles(arc_heaterbed_temp, 0, 360); // 设置角度
-  lv_arc_set_value(arc_heaterbed_temp, 100);        // 设置初始值
-  lv_obj_center(arc_heaterbed_temp);                // 居中显示
-}
+//   lv_obj_remove_style(arc_heaterbed_temp, NULL, LV_PART_KNOB); // 移除样式
+//   lv_obj_clear_flag(arc_heaterbed_temp, LV_OBJ_FLAG_CLICKABLE);
+//   lv_obj_set_style_arc_color(arc_heaterbed_temp,
+//                              lv_palette_main(LV_PALETTE_TEAL),
+//                              LV_PART_INDICATOR);    // 进度条颜色
+//   lv_obj_set_size(arc_heaterbed_temp, 224, 224);    // 设置尺寸
+//   lv_arc_set_rotation(arc_heaterbed_temp, 270);     // 设置零度位置
+//   lv_arc_set_bg_angles(arc_heaterbed_temp, 0, 360); // 设置角度
+//   lv_arc_set_value(arc_heaterbed_temp, 100);        // 设置初始值
+//   lv_obj_center(arc_heaterbed_temp);                // 居中显示
+// }
 
 //----------------------------------------screen3----初始化------------------------------------------------------//
 void init_label_print_file() {
@@ -306,16 +306,6 @@ void init_bar_fan_speed() {
 }
 
 //----------------------------------------screen1---刷新-------------------------------------------------------//
-void update_label_print_status() {
-
-  label_print_status = lv_label_create(lv_scr_act()); // 创建文字对象
-
-  lv_obj_add_style(label_print_status, &style_label_print_status,
-                   LV_PART_MAIN); // 将样式添加到文字对象中
-  lv_label_set_text(label_print_status, text_print_status.c_str());
-  lv_obj_align(label_print_status, LV_ALIGN_CENTER, 0, 50); // 居中显示
-}
-
 void update_label_print_progress() {
   String TEXT = String(progress_data) + "%";
 
@@ -382,110 +372,6 @@ void update_label_heaterbed_target_temp() {
                    LV_PART_MAIN); // 将样式添加到文字对象中
   lv_label_set_text(label_bed_target_temp, text_bed_target_temp.c_str());
   lv_obj_align(label_bed_target_temp, LV_ALIGN_CENTER, 0, -75); // 居中显示
-}
-
-void update_arc_extruder_temp() {
-
-  arc_extruder_temp = lv_arc_create(lv_scr_act()); // 创建圆弧对象
-
-  lv_style_set_arc_width(&style_arc_extruder_temp, 8); // 设置样式的圆弧粗细
-  lv_obj_add_style(arc_extruder_temp, &style_arc_extruder_temp,
-                   LV_PART_MAIN); // 将样式应用到圆弧背景
-  lv_obj_add_style(arc_extruder_temp, &style_arc_extruder_temp,
-                   LV_PART_INDICATOR); // 将样式应用到圆弧前景
-
-  lv_obj_remove_style(arc_extruder_temp, NULL, LV_PART_KNOB); // 移除样式
-  lv_obj_clear_flag(arc_extruder_temp, LV_OBJ_FLAG_CLICKABLE);
-  lv_obj_set_style_arc_color(arc_extruder_temp,
-                             lv_palette_main(LV_PALETTE_ORANGE),
-                             LV_PART_INDICATOR);   // 进度条颜色
-  lv_obj_set_size(arc_extruder_temp, 240, 240);    // 设置尺寸
-  lv_arc_set_rotation(arc_extruder_temp, 270);     // 设置零度位置
-  lv_arc_set_bg_angles(arc_extruder_temp, 0, 360); // 设置角度
-  lv_arc_set_value(arc_extruder_temp, 100);        // 设置值
-  lv_obj_center(arc_extruder_temp);                // 居中显示
-}
-
-void update_arc_heaterbed_temp() {
-  arc_heaterbed_temp = lv_arc_create(lv_scr_act()); // 创建圆弧对象
-
-  lv_style_set_arc_width(&style_arc_heaterbed_temp, 8); // 设置样式的圆弧粗细
-  lv_obj_add_style(arc_heaterbed_temp, &style_arc_heaterbed_temp,
-                   LV_PART_MAIN); // 将样式应用到圆弧背景
-  lv_obj_add_style(arc_heaterbed_temp, &style_arc_heaterbed_temp,
-                   LV_PART_INDICATOR); // 将样式应用到圆弧前景
-
-  lv_obj_remove_style(arc_heaterbed_temp, NULL, LV_PART_KNOB); // 移除样式
-  lv_obj_clear_flag(arc_heaterbed_temp, LV_OBJ_FLAG_CLICKABLE);
-  lv_obj_set_style_arc_color(arc_heaterbed_temp,
-                             lv_palette_main(LV_PALETTE_TEAL),
-                             LV_PART_INDICATOR);    // 进度条颜色
-  lv_obj_set_size(arc_heaterbed_temp, 224, 224);    // 设置尺寸
-  lv_arc_set_rotation(arc_heaterbed_temp, 270);     // 设置零度位置
-  lv_arc_set_bg_angles(arc_heaterbed_temp, 0, 360); // 设置角度
-  lv_arc_set_value(arc_heaterbed_temp, 100);        // 设置值
-  lv_obj_center(arc_heaterbed_temp);                // 居中显示
-}
-
-//----------------------------------------screen3---刷新-------------------------------------------------------//
-void update_label_print_file() {
-  label_print_file = lv_label_create(lv_scr_act()); // 创建文字对象
-
-  lv_obj_add_style(label_print_file, &style_label_print_file,
-                   LV_PART_MAIN); // 将样式添加到文字对象中
-
-  lv_label_set_long_mode(label_print_file, LV_LABEL_LONG_SCROLL_CIRCULAR);
-  lv_obj_set_width(label_print_file, 200);
-  lv_label_set_text(label_print_file, text_print_file_name.c_str());
-  lv_obj_align(label_print_file, LV_ALIGN_CENTER, 0, 0);
-}
-
-//----------------------------------------screen4---刷新-------------------------------------------------------//
-void update_label_ap_config() {
-  String TEXT = "AP Config....";
-
-  label_ap_config = lv_label_create(lv_scr_act()); // 创建文字对象
-
-  lv_obj_add_style(label_ap_config, &style_label_ap_config,
-                   LV_PART_MAIN); // 将样式添加到文字对象中
-  lv_label_set_text(label_ap_config, TEXT.c_str());
-  lv_obj_align(label_ap_config, LV_ALIGN_CENTER, 0, 0); // 居中显示
-}
-
-//----------------------------------------screen5---刷新-------------------------------------------------------//
-void update_label_no_klipper() {
-  String TEXT = "No klipper connect";
-
-  label_no_klipper = lv_label_create(lv_scr_act()); // 创建文字对象
-
-  lv_obj_add_style(label_no_klipper, &style_label_no_klipper,
-                   LV_PART_MAIN); // 将样式添加到文字对象中
-  lv_label_set_text(label_no_klipper, TEXT.c_str());
-  lv_obj_align(label_no_klipper, LV_ALIGN_CENTER, 0, 0); // 居中显示
-}
-
-//----------------------------------------screen6---刷新-------------------------------------------------------//
-void update_label_fan_speed() {
-  String TEXT = "fan speed: " + String(fanspeed_data) + "%";
-
-  label_fan_speed = lv_label_create(lv_scr_act()); // 创建文字对象
-
-  lv_obj_add_style(label_fan_speed, &style_label_fan_speed,
-                   LV_PART_MAIN); // 将样式添加到文字对象中
-  lv_label_set_text(label_fan_speed, TEXT.c_str());
-  lv_obj_align(label_fan_speed, LV_ALIGN_CENTER, 0, -40); // 居中显示
-}
-
-void update_bar_fan_speed() {
-  bar_fan_speed = lv_bar_create(lv_scr_act()); // 创建圆弧对象
-
-  lv_obj_set_style_arc_color(bar_fan_speed, lv_palette_main(LV_PALETTE_BLUE),
-                             LV_PART_INDICATOR); // 进度条颜色
-
-  lv_obj_set_size(bar_fan_speed, 200, 20); // 设置尺寸
-  lv_bar_set_range(bar_fan_speed, 0, 100); // 设置开始结束
-  lv_bar_set_value(bar_fan_speed, fanspeed_data, LV_ANIM_OFF); // 设置初始值
-  lv_obj_align(bar_fan_speed, LV_ALIGN_CENTER, 0, 20);         // 居中显示
 }
 
 //-----------------------------------------------------------------------------------------------------//
