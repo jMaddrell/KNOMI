@@ -20,9 +20,6 @@
 #include <test.h>
 
 
-//全局变量
-const char * statedata;
-
 uint16_t bedtemp_actual = 0;
 uint16_t bedtemp_target = 0;
 uint16_t last_bedtemp_target = 0;
@@ -42,7 +39,6 @@ String text_bed_target_temp = " °C";
 int httpswitch = 1;
 
 String nameStrpriting="0";
-String fanspeed="0";
 
 uint32_t keyscan_nowtime=0;
 uint32_t keyscan_nexttime=0;
@@ -60,15 +56,11 @@ Ticker timer2;
 static lv_disp_draw_buf_t draw_buf;    //定义显示器变量
 static lv_color_t buf[TFT_WIDTH*10]; //定义刷新缓存
  
-TFT_eSPI tft = TFT_eSPI(240,240);
+TFT_eSPI tft = TFT_eSPI(TFT_WIDTH,TFT_WIDTH);
 
 
 //打印进度百分比变量定义
 int16_t progress_data=0;
-//喷头温度百分比变量定义
-int16_t ext_per_data=0;
-//热床温度百分比变量定义
-int16_t bed_per_data=0;
 //风扇转速百分比变量定义
 int16_t fanspeed_data=0;
 
