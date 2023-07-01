@@ -4,3 +4,4 @@
 - [x] Add clang-format (LLVM) to pio config
 - [ ] Add unit tests
 - [ ] Setup github actions
+- [ ] Write a real readme
