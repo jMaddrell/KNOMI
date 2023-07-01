@@ -1,0 +1,3 @@
+[submodule "lv_img_conv"]
+	path = lv_img_conv
+	url = git@github.com:lvgl/lv_img_conv.git
