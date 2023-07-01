@@ -34,8 +34,6 @@ String text_ext_target_temp = " °C";
 String text_bed_actual_temp = " °C";
 String text_bed_target_temp = " °C";
 
-int httpswitch = 1;
-
 String nameStrpriting = "0";
 
 uint32_t keyscan_nowtime = 0;
@@ -906,6 +904,15 @@ void setup()
   }
 }
 
+enum http_request_type {
+  TEMPERATURE,
+  PRINT_PROGRESS,
+  HOMING,
+  LEVELING
+};
+
+enum http_request_type requestType = TEMPERATURE;
+
 void loop()
 {
   // lv_tick_inc(1);/* le the GUI do its work */
@@ -962,24 +969,20 @@ void loop()
           First_connection_flg = 1;
         }
 
-        if (httpswitch == 1)
+        switch (requestType)
         {
+        case TEMPERATURE:
           http.begin("http://" + klipper_ip + "/api/printer"); // 获取温度
-        }
-        else if (httpswitch == 2)
-        {
-          http.begin("http://" + klipper_ip + "/printer/objects/query?display_status"); // 获取打印
-        }
-        else if (httpswitch == 3)
-        {
-          http.begin("http://" + klipper_ip + "/printer/objects/query?gcode_macro%20_KNOMI_STATUS"); // 获取home状态
-        }
-        else if (httpswitch == 4)
-        {
-          http.begin("http://" + klipper_ip + "/printer/objects/query?gcode_macro%20_KNOMI_STATUS"); // 获取levelling状态
-        }
-        else
-        {
+          break;
+        case PRINT_PROGRESS:
+          http.begin("http://" + klipper_ip + "/printer/objects/query?display_status");
+          break;
+        case HOMING:
+        case LEVELING:
+          http.begin("http://" + klipper_ip + "/printer/objects/query?gcode_macro%20_KNOMI_STATUS");
+          break;
+        default:
+          break;
         }
 
         int httpCode = http.GET(); // Make the request
@@ -993,39 +996,40 @@ void loop()
           DynamicJsonDocument doc(payload.length() * 2);
           deserializeJson(doc, payload);
 
-          if (httpswitch == 1)
+          if (requestType == TEMPERATURE)
           { // 喷头热床温度显示
+          // 1 = tempreature display
 
-            String nameStr1 = doc["temperature"]["bed"]["actual"].as<String>();
-            String nameStr2 = doc["temperature"]["bed"]["target"].as<String>();
-            String nameStr3 = doc["temperature"]["tool0"]["actual"].as<String>();
-            String nameStr4 = doc["temperature"]["tool0"]["target"].as<String>();
-            String nameStr5 = doc["state"]["flags"]["printing"].as<String>();
-            String nameStr6 = doc["state"]["flags"]["paused"].as<String>();
+            String bedTempActual = doc["temperature"]["bed"]["actual"].as<String>();
+            String bedTempTarget = doc["temperature"]["bed"]["target"].as<String>();
+            String toolTempActual = doc["temperature"]["tool0"]["actual"].as<String>();
+            String toolTempTarget = doc["temperature"]["tool0"]["target"].as<String>();
+            String statusPrinting = doc["state"]["flags"]["printing"].as<String>();
+            String statusPaused = doc["state"]["flags"]["paused"].as<String>();
 
             bedtemp_actual = (uint16_t)((doc["temperature"]["bed"]["actual"].as<double>()) * 100);
             bedtemp_target = (uint16_t)((doc["temperature"]["bed"]["target"].as<double>()) * 100);
             tooltemp_actual = (uint16_t)((doc["temperature"]["tool0"]["actual"].as<double>()) * 100);
             tooltemp_target = (uint16_t)((doc["temperature"]["tool0"]["target"].as<double>()) * 100);
 
-            Serial.println(nameStr1);
-            Serial.println(nameStr2);
-            Serial.println(nameStr3);
-            Serial.println(nameStr4);
+            Serial.println(bedTempActual);
+            Serial.println(bedTempTarget);
+            Serial.println(toolTempActual);
+            Serial.println(toolTempTarget);
 
-            text_ext_actual_temp = nameStr3 + "°C";
-            text_ext_target_temp = nameStr4 + "°C";
-            text_bed_actual_temp = nameStr1 + "°C";
-            text_bed_target_temp = nameStr2 + "°C";
-
-            if (nameStr5 == "true")
+            text_ext_actual_temp = toolTempActual + "°C";
+            text_ext_target_temp = toolTempTarget + "°C";
+            text_bed_actual_temp = bedTempActual + "°C";
+            text_bed_target_temp = bedTempTarget + "°C";
+            
+            if (statusPrinting == "true")
             {
               text_print_status = "Printing";
               print_status = 1;
             }
             else
             {
-              if (nameStr6 == "true")
+              if (statusPaused == "true")
               {
                 text_print_status = "paused";
                 print_status = 2;
@@ -1053,14 +1057,13 @@ void loop()
             }
             last_bedtemp_target = bedtemp_target;
             last_tooltemp_target = tooltemp_target;
-
-            httpswitch = 2;
+            requestType = PRINT_PROGRESS;
           }
-          else if (httpswitch == 2)
-          { // 打印进度
+          else if (requestType == PRINT_PROGRESS)
+          { // 2 = print progress
 
-            double nameStr7 = (doc["result"]["status"]["display_status"]["progress"].as<double>()) * 1000;
-            uint16_t datas = (uint16_t)(nameStr7);
+            double printProgress = (doc["result"]["status"]["display_status"]["progress"].as<double>()) * 1000;
+            uint16_t datas = (uint16_t)(printProgress);
             uint16_t datas1 = datas % 10;
 
             if (datas1 > 4)
@@ -1077,9 +1080,9 @@ void loop()
             
             Serial.println(nameStrpriting);
 
-            httpswitch = 3;
+            requestType = HOMING;
           }
-          else if (httpswitch == 3)
+          else if (requestType == HOMING)
           { // home状态
 
             String nameStr8 = doc["result"]["status"]["gcode_macro _KNOMI_STATUS"]["homing"].as<String>();
@@ -1096,9 +1099,9 @@ void loop()
               homing_status = 0;
             }
 
-            httpswitch = 4;
+            requestType = LEVELING;
           }
-          else if (httpswitch == 4)
+          else if (requestType == LEVELING)
           { // levelling状态
 
             String nameStr9 = doc["result"]["status"]["gcode_macro _KNOMI_STATUS"]["probing"].as<String>();
@@ -1115,17 +1118,15 @@ void loop()
               levelling_status = 0;
             }
 
-            httpswitch = 1;
-          }
-          else
-          {
+            requestType = TEMPERATURE;
           }
         }
         else
         {
 
-          if (screen_no_klipper_dis_flg < 10)
+          if (screen_no_klipper_dis_flg < 10) {
             screen_no_klipper_dis_flg++;
+          }
 
           Serial.println("Error on HTTP request");
 
