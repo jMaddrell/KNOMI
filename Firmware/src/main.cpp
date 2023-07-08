@@ -646,6 +646,8 @@ void loop() {
     }
   }
 
+  // TODO: Exit test mode clear screen?
+
   if ((screen_begin_dis_flg == 1) && !test_mode_flag) {
     //-------------HTTP请求-----------------------//
     httprequest_nowtime = millis();
