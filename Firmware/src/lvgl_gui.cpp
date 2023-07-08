@@ -10,7 +10,6 @@
 
 // 显示刷新定时器
 lv_timer_t *update_timer = NULL;
-uint8_t contne = 0;
 uint8_t print_status = 0; // 0 待机  1 打印  2暂停
 uint8_t homing_status = 0;
 uint8_t levelling_status = 0;
@@ -26,7 +25,7 @@ uint8_t screen_begin_dis_flg = 0;      // 0 启动while循环
 uint8_t screen_no_klipper_dis_flg = 0; // 0 连接klipper失败
 uint8_t start_http_request_flg = 0;    // 0 开始启动http请求
 uint8_t wifi_ap_config_flg = 0;        // 0 wifi配网中
-uint8_t First_connection_flg = 0;      // 第一次连接上
+bool First_connection_flg = false;      // 第一次连接上
 
 // 打印界面对象定义
 lv_obj_t *label_print_status;
@@ -34,7 +33,6 @@ lv_obj_t *label_print_progress;
 lv_obj_t *arc_print_progress;
 
 // 打印界面对象样式定义
-lv_style_t style_label_print_status;
 lv_style_t style_label_print_progress;
 lv_style_t style_arc_print_progress;
 
@@ -44,17 +42,11 @@ lv_obj_t *label_ext_target_temp;
 lv_obj_t *label_bed_actual_temp;
 lv_obj_t *label_bed_target_temp;
 
-lv_obj_t *arc_extruder_temp;
-lv_obj_t *arc_heaterbed_temp;
-
 // 温度界面对象样式定义
 lv_style_t style_label_ext_actual_temp;
 lv_style_t style_label_ext_target_temp;
 lv_style_t style_label_bed_actual_temp;
 lv_style_t style_label_bed_target_temp;
-
-lv_style_t style_arc_extruder_temp;
-lv_style_t style_arc_heaterbed_temp;
 
 // 打印文件界面对象定义
 lv_obj_t *label_print_file;
@@ -76,7 +68,6 @@ lv_obj_t *label_fan_speed;
 lv_obj_t *bar_fan_speed;
 // 打印界面对象样式定义
 lv_style_t style_label_fan_speed;
-lv_style_t style_bar_fan_speed;
 
 lv_obj_t *label_open_anim;
 lv_obj_t *open_anim_arc;
