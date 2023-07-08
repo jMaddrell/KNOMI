@@ -5,3 +5,5 @@
 - [ ] Add unit tests
 - [ ] Setup github actions
 - [ ] Write a real readme
+- [ ] Add package.json for lv_img_convert
+- [ ] Make pio try to install lv_img_convert?
