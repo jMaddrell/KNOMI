@@ -6,7 +6,6 @@ const byte DNS_PORT = 53; // 设置DNS端口号
 const int webPort = 80;   // 设置Web端口号
 
 const char *AP_SSID = "BTT-KNOMI"; // 设置AP热点名称
-// const char* AP_PASS  = "";               //这里不设置设置AP热点密码
 
 const char *HOST_NAME = "KNOMI"; // 设置设备名
 String scanNetworksID = "";      // 用于储存扫描到的WiFi ID
@@ -35,25 +34,6 @@ int wifi_addr = 1; // 被写入数据的EEPROM地址编号  wifi-ssid-psw klippe
 // ，4为 ap模式标志位
 config_type wificonf = {{""}, {""}, {""}, {""}};
 
-// #define ROOT_HTML  "<!DOCTYPE html><html><head><title>WIFI</title><meta
-// name=\"viewport\" content=\"width=device-width,
-// initial-scale=1\"></head><style type=\"text/css\">.input{display: block;
-// margin-top: 10px;}.input span{width: 100px; float: left; float: left; height:
-// 36px; line-height: 36px;}.input input{height: 30px;width: 200px;}.btn{width:
-// 110px; height: 50px; background-color: #438EF0; border-radius:8px;
-// font-size:20px;color:#ffffff;border-color: #438EF0; margin-top:16px;
-// margin-left:104px;}</style><body><form method=\"POST\"
-// action=\"configwifi\"><p><span> BIQU TFT</P><label class=\"input\"><span>WiFi
-// SSID</span><input type=\"text\" name=\"ssid\" value=\"\"></label><label
-// class=\"input\"><span>WiFi PASS</span> <input type=\"text\"
-// name=\"pass\"><label class=\"input\"><span>Klipper IP</span> <input
-// type=\"text\"  name=\"klipper\"></label><input class=\"btn\" type=\"submit\"
-// name=\"submit\" value=\"Submie\"> </form>" #define ROOT_HTML_OK  "<!DOCTYPE
-// html><html><head><title>WIFI SET</title><meta name=\"viewport\"
-// content=\"width=device-width, initial-scale=1\"></head><style
-// type=\"text/css\">.c,body {text-align: center}</style><body><form
-// method=\"POST\" action=\"configwifi\"></label><p><span> submit
-// successfully!</P><p><span> please manually close this page.</P> </form>"
 #define ROOT_HTML                                                              \
   "<!DOCTYPE html><html><head><title>WIFI</title><meta name=\"viewport\" "     \
   "content=\"width=device-width, initial-scale=1\"></head><style "             \
@@ -79,13 +59,6 @@ config_type wificonf = {{""}, {""}, {""}, {""}};
  * 处理网站根目录的访问请求
  */
 void handleRoot() {
-  // if (server.hasArg("selectSSID")) {
-  //   server.send(200, "text/html", ROOT_HTML + scanNetworksID +
-  //   "</body></html>");   //scanNetWprksID是扫描到的wifi
-  // } else {
-  //   server.send(200, "text/html", ROOT_HTML + scanNetworksID +
-  //   "</body></html>");
-  // }
   if (server.hasArg("selectSSID")) {
     server.send(200, "text/html", ROOT_HTML);
   } else {
@@ -144,9 +117,6 @@ void handleConfigWifi() // 返回http状态
   }
   delay(200);
 
-  // server.send(200, "text/html", "<meta charset='UTF-8'>SSID：" + wifi_ssid +
-  // "<br />password:" + wifi_pass + "<br />Trying to connect Trying to connect,
-  // please manually close this page."); //返回保存成功页面
   server.send(200, "text/html", ROOT_HTML_OK); // 返回保存成功页面
   delay(2000);
   WiFi.softAPdisconnect(
@@ -303,13 +273,11 @@ void connectToWiFi(int timeOut_s) {
   while (WiFi.status() != WL_CONNECTED) // 等待WIFI连接成功
   {
     Serial.print("."); // 一共打印30个点点
-    // digitalWrite(LED, !digitalRead(LED));
     delay(500);
     Connect_time++;
 
     if (Connect_time > 2 * timeOut_s) // 长时间连接不上，重新进入配网页面
     {
-      // digitalWrite(LED, LOW);
       Serial.println(""); // 主要目的是为了换行符
       Serial.println("WIFI autoconnect fail, start AP for webconfig now...");
       wifiConfig(); // 开始配网功能
@@ -318,7 +286,7 @@ void connectToWiFi(int timeOut_s) {
       return; // 跳出 防止无限初始化
     }
 
-    if (test_mode_flag == 1) { // 测试模式直接退出
+    if (test_mode_flag) { // 测试模式直接退出
 
       return;
     }
@@ -344,7 +312,6 @@ void connectToWiFi(int timeOut_s) {
     Serial.print("WIFI status is:");
     Serial.print(WiFi.status());
 
-    // digitalWrite(LED, HIGH);
     server.stop(); // 停止开发板所建立的网络服务器。
 
     wifi_connect_ok = 1; // 已连接上wifi,切换显示
@@ -358,7 +325,6 @@ void wifiConfig() {
   initSoftAP();
   initDNS();
   initWebServer();
-  // scanWiFi();
 }
 
 /*
@@ -379,8 +345,6 @@ void restoreWiFi() {
   esp_wifi_restore(); // 删除保存的wifi信息
   Serial.println("连接信息已清空,准备重启设备..");
   delay(10);
-  // blinkLED(LED, 5, 500); //LED闪烁5次         //关于LED，不需要可删除
-  // digitalWrite(LED, LOW);                    //关于LED，不需要可删除
 }
 
 // wifi ssid，psw保存到eeprom
@@ -439,30 +403,7 @@ void checkConnect(bool reConnect) {
       connectToWiFi(connectTimeOut_s); // 连接wifi函数
     }
   }
-  // else if (digitalRead(LED) != HIGH)
-  //   digitalWrite(LED, HIGH);                    //wifi连接成功
 }
-
-/*
- * LED闪烁函数        //用不上LED可删除
- */
-// void blinkLED(int led, int n, int t)
-// {
-//   for (int i = 0; i < 2 * n; i++)
-//   {
-//     digitalWrite(led, !digitalRead(led));
-//     delay(t);
-//   }
-// }
-
-/*
- * LED初始化
- */
-// void LEDinit()
-// {
-//   pinMode(LED, OUTPUT);                 //配置LED口为输出口
-//   digitalWrite(LED, LOW);               //初始灯灭
-// }
 
 /*
  * 检测客户端DNS&HTTP请求

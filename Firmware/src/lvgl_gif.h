@@ -17,7 +17,6 @@ extern lv_obj_t *gif_wait_back;
 extern lv_obj_t *gif_Standby;
 extern lv_obj_t *gif_BeforePrinting;
 extern lv_obj_t *gif_AfterPrinting;
-extern lv_obj_t *gif_StartPrinting;
 extern lv_obj_t *gif_Printing;
 extern lv_obj_t *gif_PrintComplete;
 
@@ -42,7 +41,6 @@ void init_gif_black_back_display();
 void init_gif_Standby_display();
 void init_gif_BeforePrinting_display();
 void init_gif_AfterPrinting_display();
-void init_gif_StartPrinting_display();
 void init_gif_Printing_display();
 void init_gif_PrintComplete_display();
 
@@ -62,7 +60,6 @@ void update_gif_black_back_display();
 void update_gif_Standby_display();
 void update_gif_BeforePrinting_display();
 void update_gif_AfterPrinting_display();
-void update_gif_StartPrinting_display();
 void update_gif_Printing_display();
 void update_gif_PrintComplete_display();
 

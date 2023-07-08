@@ -16,7 +16,6 @@ void Open_display_init();
 
 // 显示刷新定时器
 extern lv_timer_t *update_timer;
-extern uint8_t contne;
 extern uint8_t print_status;
 extern uint8_t homing_status;
 extern uint8_t levelling_status;
@@ -29,14 +28,13 @@ extern uint8_t screen_begin_dis_flg;
 extern uint8_t screen_no_klipper_dis_flg; // 0 连接klipper失败
 extern uint8_t start_http_request_flg;    // 0 开始启动http请求
 extern uint8_t wifi_ap_config_flg;        // 0 wifi配网中
-extern uint8_t First_connection_flg;
+extern bool First_connection_flg;
 
 // 打印界面对象定义
 extern lv_obj_t *label_print_status;
 extern lv_obj_t *label_print_progress;
 extern lv_obj_t *arc_print_progress;
 // 打印界面对象样式定义
-extern lv_style_t style_label_print_status;
 extern lv_style_t style_label_print_progress;
 extern lv_style_t style_arc_print_progress;
 
@@ -46,16 +44,11 @@ extern lv_obj_t *label_ext_target_temp;
 extern lv_obj_t *label_bed_actual_temp;
 extern lv_obj_t *label_bed_target_temp;
 
-extern lv_obj_t *arc_extruder_temp;
-extern lv_obj_t *arc_heaterbed_temp;
 // 温度界面对象样式定义
 extern lv_style_t style_label_ext_actual_temp;
 extern lv_style_t style_label_ext_target_temp;
 extern lv_style_t style_label_bed_actual_temp;
 extern lv_style_t style_label_bed_target_temp;
-
-extern lv_style_t style_arc_extruder_temp;
-extern lv_style_t style_arc_heaterbed_temp;
 
 // 打印文件界面对象定义
 extern lv_obj_t *label_print_file;
@@ -77,7 +70,6 @@ extern lv_obj_t *label_fan_speed;
 extern lv_obj_t *bar_fan_speed;
 // 打印界面对象样式定义
 extern lv_style_t style_label_fan_speed;
-extern lv_style_t style_bar_fan_speed;
 
 // 界面对象及样式初始化函数定义
 //---------screen1---------------//
@@ -89,8 +81,7 @@ void init_label_extruder_actual_temp();
 void init_label_heaterbed_actual_temp();
 void init_label_extruder_target_temp();
 void init_label_heaterbed_target_temp();
-void init_arc_extruder_temp();
-void init_arc_heaterbed_temp();
+
 //---------screen3---------------//
 void init_label_print_file();
 //---------screen4---------------//
@@ -102,7 +93,6 @@ void init_label_fan_speed();
 
 // 界面对象刷新处理函数定义
 //---------screen1---------------//
-void update_label_print_status();
 void update_label_print_progress();
 void update_arc_print_progress();
 //---------screen2---------------//
@@ -110,16 +100,6 @@ void update_label_extruder_actual_temp();
 void update_label_heaterbed_actual_temp();
 void update_label_extruder_target_temp();
 void update_label_heaterbed_target_temp();
-void update_arc_extruder_temp();
-void update_arc_heaterbed_temp();
-//---------screen3---------------//
-void update_label_print_file();
-//---------screen4---------------//
-void update_label_ap_config();
-//---------screen5---------------//
-void update_label_no_klipper();
-//---------screen6---------------//
-void update_label_fan_speed();
 
 // 界面对象刷新处理函数定义
 void update_print_progress(lv_timer_t *timer);

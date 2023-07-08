@@ -107,12 +107,14 @@ int KeyMessageProc(uint8_t KeyMessage) {
     KeyDownFlag = 0; // 按键已松开
 
     test_key_timer_cnt = 0;
-    test_key_cnt++; // 1秒内短按3次，定时器自动清零
+    test_key_cnt++; // 1秒内短按3次，定时器自动清零 Short press counter withing
+                    // 1sec
 
-    if (test_key_cnt >= 3) { // 短按3下，进入测试模式
+    // Short press three times to toggle test mode...
+    if (test_key_cnt >= 3) {
       test_key_cnt = 0;
-      test_mode_flag = 1;
-      Serial.println("\n进入测试模式");
+      test_mode_flag = !test_mode_flag;
+      Serial.println("\nToggling test mode");
     }
     break;
 
@@ -128,7 +130,7 @@ int KeyMessageLongProc(uint8_t KeyMessage) {
 
   switch (KeyMessage) {
   case KEY_1_DW:
-    Serial.println("\n按键已长按4秒,正在清空网络连保存接信息.");
+    Serial.println("\nReset wifi configuration (boot held 4 seconds).");
     deletewificonfig(); // 删除EEROM保存的wifi信息
     restoreWiFi();      // 删除保存的wifi信息
     ESP.restart();      // 重启复位esp32

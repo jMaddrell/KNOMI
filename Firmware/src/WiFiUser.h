@@ -32,7 +32,6 @@ extern config_type wificonf;
 //===========需要调用的函数===========
 void checkConnect(bool reConnect); // 检测wifi是否已经连接
 void restoreWiFi();                // 删除保存的wifi信息
-void LEDinit();                    // LED初始化
 void checkDNS_HTTP();              // 检测客户端DNS&HTTP请求
 void connectToWiFi(int timeOut_s); // 连接WiFi
 
@@ -46,11 +45,9 @@ void initWebServer();    // 初始化WebServer
 bool scanWiFi();         // 扫描附近的WiFi，为了显示在配网界面
 void wifiConfig();       // 配置配网功能
 void wifiConfig_test();  // 测试时使用
-void blinkLED(int led, int n, int t); // LED闪烁函数        //用不上LED可删除
 
 //===========需要保存的数据wifi账号、wifi密码、klipperIp===========
 void savewificonfig();
 void readwificonfig();
 void deletewificonfig();
-void connection_timing(int Connect_time);
 #endif

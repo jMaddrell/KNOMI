@@ -14,7 +14,6 @@ LV_IMG_DECLARE(AP_Config_Back);
 LV_IMG_DECLARE(Disconnect_Back);
 
 LV_IMG_DECLARE(Standby);
-LV_IMG_DECLARE(StartPrinting);
 LV_IMG_DECLARE(Printing);
 LV_IMG_DECLARE(PrintComplete);
 
@@ -44,7 +43,6 @@ lv_obj_t *gif_BeforePrinting;
 lv_obj_t *gif_AfterPrinting;
 
 lv_obj_t *gif_Standby;
-lv_obj_t *gif_StartPrinting;
 lv_obj_t *gif_Printing;
 lv_obj_t *gif_PrintComplete;
 
@@ -139,12 +137,6 @@ void init_gif_AfterPrinting_display() {
   lv_obj_align(gif_AfterPrinting, LV_ALIGN_CENTER, 0, 0);
 }
 
-void init_gif_StartPrinting_display() {
-  gif_StartPrinting = lv_gif_create(lv_scr_act());
-  lv_gif_set_src(gif_StartPrinting, &StartPrinting);
-  lv_obj_align(gif_StartPrinting, LV_ALIGN_CENTER, 0, 0);
-}
-
 void init_gif_Printing_display() {
   gif_Printing = lv_gif_create(lv_scr_act());
   lv_gif_set_src(gif_Printing, &Printing);
@@ -199,12 +191,6 @@ void update_gif_AfterPrinting_display() {
   gif_AfterPrinting = lv_gif_create(lv_scr_act());
   lv_gif_set_src(gif_AfterPrinting, &AfterPrinting);
   lv_obj_align(gif_AfterPrinting, LV_ALIGN_CENTER, 0, 0);
-}
-
-void update_gif_StartPrinting_display() {
-  gif_StartPrinting = lv_gif_create(lv_scr_act());
-  lv_gif_set_src(gif_StartPrinting, &StartPrinting);
-  lv_obj_align(gif_StartPrinting, LV_ALIGN_CENTER, 0, 0);
 }
 
 void update_gif_Printing_display() {

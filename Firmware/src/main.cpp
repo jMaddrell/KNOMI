@@ -486,47 +486,20 @@ void delete_exist_object() {
     lv_obj_del(img_black_back);
     lv_obj_del(label_print_progress);
     lv_obj_del(arc_print_progress);
-  } else if (exist_object_screen_flg == 2) {
-  } else if (exist_object_screen_flg == 3) {
-
-    lv_obj_del(label_print_file);
-  } else if (exist_object_screen_flg == 4) {
-
-    lv_obj_del(label_ap_config);
-  } else if (exist_object_screen_flg == 5) {
-
-    lv_obj_del(label_no_klipper);
-  } else if (exist_object_screen_flg == 6) {
-
-    lv_obj_del(label_fan_speed);
-    lv_obj_del(bar_fan_speed);
   } else if (exist_object_screen_flg == 7) {
 
     lv_obj_del(img_black_back);
     lv_obj_del(gif_Standby);
-  } else if (exist_object_screen_flg == 8) {
-
-    lv_obj_del(img_black_back);
-    lv_obj_del(gif_StartPrinting);
   } else if (exist_object_screen_flg == 9) {
 
     lv_obj_del(img_black_back);
     lv_obj_del(gif_Printing);
-  } else if (exist_object_screen_flg == 10) {
-    // PrintComplete
-  } else if (exist_object_screen_flg == 11) {
-
-    lv_obj_del(img_black_back);
-    lv_obj_del(gif_bed_temp);
-    lv_obj_del(label_bed_actual_temp);
-    lv_obj_del(label_bed_target_temp);
   } else if (exist_object_screen_flg == 12) {
 
     lv_obj_del(img_black_back);
     lv_obj_del(gif_ext_temp);
     lv_obj_del(label_ext_actual_temp);
     lv_obj_del(label_ext_target_temp);
-  } else if (exist_object_screen_flg == 13) {
   } else if (exist_object_screen_flg == 14) {
 
     lv_obj_del(img_black_back);
@@ -646,7 +619,7 @@ void loop() {
   lv_task_handler();
 
   //----------------测试模式，搜索在线网络------------------//
-  if (test_mode_flag == 1) {
+  if (test_mode_flag) {
 
     screen_begin_dis_flg = 0;
 
@@ -673,7 +646,7 @@ void loop() {
     }
   }
 
-  if ((screen_begin_dis_flg == 1) && (test_mode_flag == 0)) {
+  if ((screen_begin_dis_flg == 1) && !test_mode_flag) {
     //-------------HTTP请求-----------------------//
     httprequest_nowtime = millis();
     if (httprequest_nowtime > httprequest_nexttime) {
@@ -686,10 +659,10 @@ void loop() {
 
         wifi_ap_config_flg = 0; // 已连接上wifi
 
-        if (First_connection_flg == 0) { // 连接上wifi 切换回正常显示
+        if (!First_connection_flg) { // 连接上wifi 切换回正常显示
           timer_contne = 0;
           display_step = 2;
-          First_connection_flg = 1;
+          First_connection_flg = true;
         }
 
         switch (requestType) {
@@ -865,7 +838,7 @@ void loop() {
       if (timer_contne > 0)
         timer_contne--; // 显示计时
 
-      if ((wifi_ap_config_flg == 0) && (test_mode_flag == 0)) {
+      if ((wifi_ap_config_flg == 0) && !test_mode_flag) {
 
         if ((display_step == 2) && (timer_contne == 0)) { // Standby
           timer_contne = 5;
@@ -1067,7 +1040,7 @@ void loop() {
 
     if (WiFi.status() != WL_CONNECTED) { // wifi没有连接成功
       checkDNS_HTTP(); // 检测客户端DNS&HTTP请求，也就是检查配网页面那部分
-      First_connection_flg = 0;
+      First_connection_flg = false;
     }
     netcheck_nexttime = netcheck_nowtime + 100UL;
   }

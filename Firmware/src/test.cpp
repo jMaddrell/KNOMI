@@ -13,7 +13,7 @@ LV_IMG_DECLARE(green_test);
 LV_IMG_DECLARE(blue_test);
 
 // 进入测试模式标志位
-uint8_t test_mode_flag = 0;
+bool test_mode_flag = false;
 uint8_t test_key_cnt = 0;
 uint32_t test_key_timer_cnt = 0;
 
@@ -67,18 +67,6 @@ void update_label_networksID_test() {
                    LV_PART_MAIN); // 将样式添加到文字对象中
   lv_label_set_text(label_netID3_test, scanNetworksID3.c_str());
   lv_obj_align(label_netID3_test, LV_ALIGN_CENTER, 0, 60); // 居中显示
-}
-
-void update_red_back_display() {
-  img_red_test = lv_img_create(lv_scr_act());
-  lv_img_set_src(img_red_test, &red_test);
-  lv_obj_align(img_red_test, LV_ALIGN_CENTER, 0, 0);
-}
-
-void update_green_back_display() {
-  img_green_test = lv_img_create(lv_scr_act());
-  lv_img_set_src(img_green_test, &green_test);
-  lv_obj_align(img_green_test, LV_ALIGN_CENTER, 0, 0);
 }
 
 void update_blue_back_display() {

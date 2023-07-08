@@ -16,10 +16,10 @@ uint8_t homing_status = 0;
 uint8_t levelling_status = 0;
 uint8_t timer_contne = 0;          // 显示时间
 uint8_t standby_voron_dis_flg = 0; // 0 standby 1voron 循环显示
-uint8_t display_step =
-    0; // 显示步骤流程 0 开机动画   2 待机动画 3 热床温度 4 喷头温度 5 打印中6
-       // 打印完成 9 打印前 10 打印完成后  11 voron logo  12 homing  13
-       // levelling 7 apconfig  8 no klipper
+uint8_t display_step = 0; // 显示步骤流程 0 boot animation   2 standby 3 bed
+                          // heating 4 nozzle temp 5 printing
+// 6 print complete 9 before printing??? 10 print complete  11 voron logo  12
+// homing  13 levelling 7 apconfig  8 no klipper
 
 uint8_t exist_object_screen_flg = 0;   // 0 没有存在的屏幕对象
 uint8_t screen_begin_dis_flg = 0;      // 0 启动while循环
@@ -170,7 +170,7 @@ void open_task_conv(lv_timer_t *timer) {
   // 连接wifi
   connectToWiFi(connectTimeOut_s); // 连接wifi，传入的是wifi连接等待时间15s
 
-  if (test_mode_flag == 0) {
+  if (!test_mode_flag) {
 
     init_img_open_logo_display();
 
@@ -183,7 +183,7 @@ void open_task_conv(lv_timer_t *timer) {
 
 void Open_display_init() {
 
-  if (test_mode_flag == 1) {
+  if (test_mode_flag) {
   } else if (wifi_ap_config_flg == 1) {
     update_gif_AP_Config_back_display();
     update_gif_AP_Config_display();
