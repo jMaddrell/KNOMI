@@ -37,6 +37,7 @@ void init_gif_levelling_display();
 void init_gif_wait_display();
 
 void init_gif_White_back_display();
+void init_gif_black_back_display();
 void init_gif_Standby_display();
 void init_gif_BeforePrinting_display();
 void init_gif_AfterPrinting_display();

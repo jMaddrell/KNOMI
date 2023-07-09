@@ -554,6 +554,7 @@ void Display_Object_Init() {
   init_label_fan_speed();
   init_bar_fan_speed();
 
+  init_gif_black_back_display();
   init_gif_Standby_display();
 
   lv_obj_del(label_print_status);
@@ -623,14 +624,13 @@ void loop() {
     screen_begin_dis_flg = 0;
 
     delay(100);
-    update_blue_back_display(); // TODO: Replace with image that is generated?
+    update_blue_back_display();
     lv_task_handler();
     delay(4000);
     lv_obj_del(img_blue_test);
 
     delay(100);
-    init_gif_White_back_display(); // TODO: Replace with image that is
-                                   // generated?
+    init_gif_White_back_display();
     update_label_scan_networks_test();
     lv_task_handler();
     delay(100);
@@ -646,7 +646,6 @@ void loop() {
     }
   }
 
-  // TODO: Use generic image as test screen?
   // TODO: Exit test mode clear screen?
 
   if ((screen_begin_dis_flg == 1) && !test_mode_flag) {
