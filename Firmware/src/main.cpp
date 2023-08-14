@@ -11,6 +11,7 @@
 #include <WiFiUser.h>
 #include <iostream>
 #include <key.h>
+
 #include <lvgl.h>
 #include <lvgl_gif.h>
 #include <lvgl_gui.h>
@@ -338,7 +339,7 @@ void update_label_heaterbed_target_temp() {
 
 //-----------------------------------------------------------------------------------------------------//
 void update_print_progress(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_label_print_progress();
   update_arc_print_progress();
 
@@ -346,21 +347,21 @@ void update_print_progress(lv_timer_t *timer) {
 }
 
 void update_standby(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_Standby_display();
 
   exist_object_screen_flg = 7;
 }
 
 void update_printing(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_Printing_display();
 
   exist_object_screen_flg = 9;
 }
 
 void update_bed_temp(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_bed_temp_display();
   update_label_heaterbed_actual_temp();
   update_label_heaterbed_target_temp();
@@ -369,7 +370,7 @@ void update_bed_temp(lv_timer_t *timer) {
 }
 
 void update_extruder_status(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_ext_temp_display();
   update_label_extruder_actual_temp();
   update_label_extruder_target_temp();
@@ -378,42 +379,42 @@ void update_extruder_status(lv_timer_t *timer) {
 }
 
 void update_print_complete(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_OK_display();
 
   exist_object_screen_flg = 14;
 }
 
 void update_voron(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_voron_display();
 
   exist_object_screen_flg = 15;
 }
 
 void update_before_printing(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_BeforePrinting_display();
 
   exist_object_screen_flg = 18;
 }
 
 void update_after_printing(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_AfterPrinting_display();
 
   exist_object_screen_flg = 19;
 }
 
 void update_homing(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_Home_display();
 
   exist_object_screen_flg = 21;
 }
 
 void update_leveling(lv_timer_t *timer) {
-  update_gif_black_back_display();
+  // update_gif_black_back_display();
   update_gif_levelling_display();
 
   exist_object_screen_flg = 22;
@@ -448,6 +449,7 @@ void lv_display_led_Init() {
   pinMode(2, OUTPUT);
   digitalWrite(2, HIGH); // 背光默认开始
 }
+static lv_style_t style_black_bg;
 
 void lv_display_Init() {
   tft.init();         // 初始化
@@ -464,6 +466,9 @@ void lv_display_Init() {
   disp_drv.flush_cb = my_disp_flush;
   disp_drv.draw_buf = &draw_buf;
   lv_disp_drv_register(&disp_drv);
+
+  lv_style_init(&style_black_bg);
+  lv_style_set_bg_color(&style_black_bg, lv_color_black());
 }
 
 void timer1_cb() {
@@ -554,7 +559,7 @@ void Display_Object_Init() {
   init_label_fan_speed();
   init_bar_fan_speed();
 
-  init_gif_black_back_display();
+  // init_gif_black_back_display();
   init_gif_Standby_display();
 
   lv_obj_del(label_print_status);
@@ -575,7 +580,7 @@ void Display_Object_Init() {
   lv_obj_del(label_fan_speed);
   lv_obj_del(bar_fan_speed);
 
-  lv_obj_del(img_black_back);
+  // lv_obj_del(img_black_back);
   lv_obj_del(gif_Standby);
 
   exist_object_screen_flg = 0;
@@ -600,6 +605,7 @@ void setup() {
 
   Display_Object_Init(); // 所有显示对象初始化一遍
 
+  lv_obj_add_style(lv_scr_act(), &style_black_bg, 0);
   Open_display_init();
 
   lv_display_led_Init(); // 晚一点开背光
@@ -656,7 +662,7 @@ void loop() {
       if ((WiFi.status() == WL_CONNECTED) && (KeyDownFlag != KEY_DWON) &&
           (start_http_request_flg ==
            1)) { // wifi已经连接成功，发送http请求获取数据
-
+        server.handleClient();
         HTTPClient http;
 
         wifi_ap_config_flg = 0; // 已连接上wifi

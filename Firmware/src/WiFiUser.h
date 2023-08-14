@@ -4,6 +4,7 @@
 #include <DNSServer.h>
 #include <EEPROM.h>
 #include <ESPmDNS.h> //用于设备域名 MDNS.begin("esp32")
+#include <HTTPUpdateServer.h>
 #include <WebServer.h>
 #include <WiFi.h>
 #include <esp_wifi.h> //用于esp_wifi_restore() 删除保存的wifi信息
@@ -14,6 +15,9 @@ extern int connectTimeOut_s;  // WiFi连接超时时间，单位秒
 extern String klipper_ip;     // 暂时存储KlipperIP
 extern String wifi_ssid;      // 暂时存储wifi账号密码
 extern int connectTimeOut_s;  // WiFi连接超时时间，单位秒
+
+extern WebServer server;
+extern HTTPUpdateServer httpUpdater;
 
 extern String scanNetworksID; // 用于储存扫描到的WiFi ID
 extern String scanNetworksID1;

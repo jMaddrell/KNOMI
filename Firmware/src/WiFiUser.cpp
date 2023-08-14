@@ -1,14 +1,17 @@
 #include "WiFiUser.h"
+#include <Preferences.h>
 #include <lvgl_gui.h>
 #include <test.h>
 
 const byte DNS_PORT = 53; // 设置DNS端口号
-const int webPort = 80;   // 设置Web端口号
 
 const char *AP_SSID = "BTT-KNOMI"; // 设置AP热点名称
 
 const char *HOST_NAME = "KNOMI"; // 设置设备名
-String scanNetworksID = "";      // 用于储存扫描到的WiFi ID
+
+Preferences prefs;
+
+String scanNetworksID = ""; // 用于储存扫描到的WiFi ID
 
 String scanNetworksID1 = "no networks found";
 String scanNetworksID2 = "";
@@ -24,8 +27,8 @@ int connectTimeOut_s = 15; // WiFi连接超时时间，单位秒
 const int LED = 2;         // 设置LED引脚
 
 DNSServer dnsServer; // 创建dnsServer实例
-WebServer
-    server(webPort); // 开启web服务, 创建TCP SERVER,参数: 端口号,最大连接数
+WebServer server; // 开启web服务, 创建TCP SERVER,参数: 端口号,最大连接数
+HTTPUpdateServer httpUpdater(true);
 
 // EEPROM参数存储地址位
 int wifi_addr = 1; // 被写入数据的EEPROM地址编号  wifi-ssid-psw klipper
@@ -184,7 +187,7 @@ void initDNS() {
  * 初始化WebServer
  */
 void initWebServer() {
-  if (MDNS.begin("esp32")) // 给设备设定域名esp32,完整的域名是esp32.local
+  if (MDNS.begin(HOST_NAME)) // 给设备设定域名esp32,完整的域名是esp32.local
   {
     Serial.println("MDNS responder started");
   }
@@ -199,7 +202,13 @@ void initWebServer() {
   server.onNotFound(
       handleNotFound); // 当浏览器请求的网络资源无法在服务器找到时调用自定义函数handleNotFound处理
 
+  httpUpdater.setup(&server);
   server.begin(); // 启动TCP SERVER
+
+  MDNS.addService("http", "tcp", 80);
+  Serial.printf(
+      "HTTPUpdateServer ready! Open http://%s.local/update in your browser\n",
+      HOST_NAME);
 
   Serial.println("WebServer started!");
 }
@@ -315,6 +324,7 @@ void connectToWiFi(int timeOut_s) {
     server.stop(); // 停止开发板所建立的网络服务器。
 
     wifi_connect_ok = 1; // 已连接上wifi,切换显示
+    wifiConfig();
   }
 }
 
@@ -322,7 +332,9 @@ void connectToWiFi(int timeOut_s) {
  * 配置配网功能
  */
 void wifiConfig() {
-  initSoftAP();
+  if (wifi_ap_config_flg == 1) {
+    initSoftAP();
+  }
   initDNS();
   initWebServer();
 }
@@ -349,6 +361,7 @@ void restoreWiFi() {
 
 // wifi ssid，psw保存到eeprom
 void savewificonfig() {
+  // prefs.isKey
   // 开始写入
   uint8_t *p = (uint8_t *)(&wificonf);
   for (int i = 0; i < sizeof(wificonf); i++) {

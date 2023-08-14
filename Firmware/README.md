@@ -1,7 +1,28 @@
 # TODO
 - [x] Generate lv_img (LV_IMG_CF_RAW_CHROMA_KEYED) from GIF at build
 - [ ] Clean up code
+    - [ ] Remove excess images
+        - [ ] test image "blue_test" - maybe just cycle R->G->B instead?
+        - [ ] btt logo(?)
+        - [ ] Solid backgrounds (do it programatically) 
+            - [ ] Replaced black background with a style - needs testing
+            - [ ] White background is an img with no source - can this be a style instead?
+            - [ ] AP_Config could be removed and replaced with animated text
+            - [ ] AP_Config_Back can be replaced with a style (white bg)
+            - [ ] wait could be replaced with a lv_spinner to free more memory
+            - [ ] Handle changing styles...
+            - [ ] print ok could be an animation - maybe leave for customization
+        
+    - [ ] Move config to Preferences
+    - [ ] Support "quick" reset (toggle cfg flag)
+    - [ ] Rewrite WiFi code (rely on events?)
+    - [ ] Clean up initial provisioning code, lib?
+    - [ ] Use screen's where possible?
+    - [ ] Simplify logic, enum's, bool's etc...
 - [x] Add clang-format (LLVM) to pio config
+- [ ] OTA update support - needs siginficant storage reduction currently @ 97% of 3mb "app" partition 
+    - [ ] Free enough space for a ota_1 partition
+    - [ ] Change partition layout
 - [ ] Add unit tests
 - [ ] Setup github actions
 - [ ] Write a real readme

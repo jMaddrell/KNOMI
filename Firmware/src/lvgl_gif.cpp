@@ -20,7 +20,7 @@ LV_IMG_DECLARE(PrintComplete);
 LV_IMG_DECLARE(BeforePrinting);
 LV_IMG_DECLARE(AfterPrinting);
 
-LV_IMG_DECLARE(bc_black);
+// LV_IMG_DECLARE(bc_black);
 
 LV_IMG_DECLARE(bed_temp);
 LV_IMG_DECLARE(ext_temp);
@@ -70,17 +70,17 @@ void update_gif_White_back_display() {
 }
 
 //-----------------------------------------黑色背景图片对象定义-------------------------------------------//
-void init_gif_black_back_display() {
-  img_black_back = lv_img_create(lv_scr_act());
-  lv_img_set_src(img_black_back, &bc_black);
-  lv_obj_align(img_black_back, LV_ALIGN_CENTER, 0, 0);
-}
+// void init_gif_black_back_display() {
+//   img_black_back = lv_img_create(lv_scr_act());
+//   lv_img_set_src(img_black_back, &bc_black);
+//   lv_obj_align(img_black_back, LV_ALIGN_CENTER, 0, 0);
+// }
 
-void update_gif_black_back_display() {
-  img_black_back = lv_img_create(lv_scr_act());
-  lv_img_set_src(img_black_back, &bc_black);
-  lv_obj_align(img_black_back, LV_ALIGN_CENTER, 0, 0);
-}
+// void update_gif_black_back_display() {
+//   img_black_back = lv_img_create(lv_scr_act());
+//   lv_img_set_src(img_black_back, &bc_black);
+//   lv_obj_align(img_black_back, LV_ALIGN_CENTER, 0, 0);
+// }
 
 void update_gif_AP_Config_back_display() {
   gif_AP_Config_back = lv_img_create(lv_scr_act());
