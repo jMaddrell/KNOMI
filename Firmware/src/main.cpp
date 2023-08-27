@@ -1,3 +1,4 @@
+#include "generated/images.h"
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <EEPROM.h>
@@ -12,7 +13,6 @@
 #include <iostream>
 #include <key.h>
 #include <lvgl.h>
-#include <lvgl_gif.h>
 #include <lvgl_gui.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -343,19 +343,19 @@ void update_print_progress(lv_timer_t *timer) {
 }
 
 void update_standby(lv_timer_t *timer) {
-  init_gif_Standby_display();
+  image_standby_display();
 
   exist_object_screen_flg = 7;
 }
 
 void update_printing(lv_timer_t *timer) {
-  init_gif_Printing_display();
+  image_printing_display();
 
   exist_object_screen_flg = 9;
 }
 
 void update_bed_temp(lv_timer_t *timer) {
-  init_gif_bed_temp_display();
+  image_bed_temp_display();
   update_label_heaterbed_actual_temp();
   update_label_heaterbed_target_temp();
 
@@ -363,7 +363,7 @@ void update_bed_temp(lv_timer_t *timer) {
 }
 
 void update_extruder_status(lv_timer_t *timer) {
-  init_gif_ext_temp_display();
+  image_extruder_temp_display();
   update_label_extruder_actual_temp();
   update_label_extruder_target_temp();
 
@@ -371,43 +371,43 @@ void update_extruder_status(lv_timer_t *timer) {
 }
 
 void update_print_complete(lv_timer_t *timer) {
-  init_gif_OK_display();
+  image_print_ok_display();
 
   exist_object_screen_flg = 14;
 }
 
 void update_voron(lv_timer_t *timer) {
-  init_gif_voron_display();
+  image_voron_display();
 
   exist_object_screen_flg = 15;
 }
 
 void update_before_printing(lv_timer_t *timer) {
-  init_gif_BeforePrinting_display();
+  image_before_printing_display();
 
   exist_object_screen_flg = 18;
 }
 
 void update_after_printing(lv_timer_t *timer) {
-  init_gif_AfterPrinting_display();
+  image_after_printing_display();
 
   exist_object_screen_flg = 19;
 }
 
 void update_homing(lv_timer_t *timer) {
-  init_gif_Home_display();
+  image_home_display();
 
   exist_object_screen_flg = 21;
 }
 
 void update_leveling(lv_timer_t *timer) {
-  init_gif_levelling_display();
+  image_levelling_display();
 
   exist_object_screen_flg = 22;
 }
 
 void update_wait(lv_timer_t *timer) {
-  init_gif_wait_back_display();
+  image_wait_display();
 
   exist_object_screen_flg = 23;
 }
@@ -469,40 +469,40 @@ void delete_exist_object() {
     lv_obj_del(arc_print_progress);
   } else if (exist_object_screen_flg == 7) {
 
-    lv_obj_del(gif_Standby);
+    lv_obj_del(img_standby);
   } else if (exist_object_screen_flg == 9) {
 
-    lv_obj_del(gif_Printing);
+    lv_obj_del(img_printing);
   } else if (exist_object_screen_flg == 12) {
 
-    lv_obj_del(gif_ext_temp);
+    lv_obj_del(img_extruder_temp);
     lv_obj_del(label_ext_actual_temp);
     lv_obj_del(label_ext_target_temp);
   } else if (exist_object_screen_flg == 14) {
 
-    lv_obj_del(gif_OK);
+    lv_obj_del(img_print_ok);
   } else if (exist_object_screen_flg == 15) {
 
-    lv_obj_del(gif_voron);
+    lv_obj_del(img_voron);
   } else if (exist_object_screen_flg == 18) {
 
-    lv_obj_del(gif_BeforePrinting);
+    lv_obj_del(img_before_printing);
   } else if (exist_object_screen_flg == 19) {
 
-    lv_obj_del(gif_AfterPrinting);
+    lv_obj_del(img_after_printing);
   } else if (exist_object_screen_flg == 20) {
 
-    lv_obj_del(gif_AP_Config_back);
-    lv_obj_del(gif_AP_Config);
+    lv_obj_del(img_ap_config_back);
+    lv_obj_del(img_ap_config);
   } else if (exist_object_screen_flg == 21) {
 
-    lv_obj_del(gif_Home);
+    lv_obj_del(img_home);
   } else if (exist_object_screen_flg == 22) {
 
-    lv_obj_del(gif_levelling);
+    lv_obj_del(img_levelling);
   } else if (exist_object_screen_flg == 23) {
 
-    lv_obj_del(gif_wait_back);
+    lv_obj_del(img_wait);
   }
 }
 
@@ -526,9 +526,6 @@ void Display_Object_Init() {
   init_label_fan_speed();
   init_bar_fan_speed();
 
-  // init_gif_black_back_display();
-  init_gif_Standby_display();
-
   lv_obj_del(label_print_status);
   lv_obj_del(label_print_progress);
   lv_obj_del(arc_print_progress);
@@ -547,7 +544,7 @@ void Display_Object_Init() {
   lv_obj_del(label_fan_speed);
   lv_obj_del(bar_fan_speed);
 
-  lv_obj_del(gif_Standby);
+  lv_obj_del(img_standby);
 
   exist_object_screen_flg = 0;
   screen_begin_dis_flg = 0;

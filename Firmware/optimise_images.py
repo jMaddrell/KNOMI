@@ -7,8 +7,8 @@ src = "./images_raw"
 dest = "./images"
 
 gifs = [f for f in listdir(src) if isfile(join(src, f)) and f.endswith('.gif')]
-bmps = [f for f in listdir(src) if isfile(join(src, f)) and not f.endswith('.gif')]
-# sources = list(map(lambda f: join(src, f), gifs))
+bmps = [f for f in listdir(src) if isfile(
+    join(src, f)) and not f.endswith('.gif')]
 
 
 def optimise():
@@ -17,18 +17,7 @@ def optimise():
     for gif in gifs:
         subprocess.call(["gifsicle", '--verbose', '--optimize=3', '--lossy=80', join(src, gif),
                         "--colors", '256', "--output", join(dest, gif)])
-        
+
     for bmp in bmps:
         im = Image.open(join(src, bmp))
-        im.save(join(dest, bmp),optimize=True,quality=65) 
-
-
-
-# gifsicle(
-#     sources=sources,  # or a single_file.gif
-#     # or just omit it and will use the first source provided.
-#     destination=dest,
-#     optimize=True,  # Whetever to add the optimize flag of not
-#     colors=256,  # Number of colors t use
-#     options=["--verbose"]  # Options to use.
-# )
+        im.save(join(dest, bmp), optimize=True, quality=65)
