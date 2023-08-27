@@ -20,3 +20,4 @@ GIFS/
 __pycache__/
 *.code-workspace
 cmake-build-debug/
+.idea/
