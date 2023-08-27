@@ -8,6 +8,7 @@ extern "C" { // extern
 
 #include <lvgl.h>
 
+extern lv_obj_t *img_open_logo;
 extern lv_obj_t *gif_AP_Config_back;
 extern lv_obj_t *gif_wait_back;
 
@@ -47,6 +48,7 @@ void init_gif_voron_display();
 
 void init_gif_AP_Config_back_display();
 void init_gif_wait_back_display();
+void init_img_open_logo_display();
 
 #ifdef __cplusplus
 } /* extern "C" */

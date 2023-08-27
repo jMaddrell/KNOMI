@@ -25,6 +25,9 @@ LV_IMG_DECLARE(ext_temp);
 
 LV_IMG_DECLARE(Print_ok);
 LV_IMG_DECLARE(Voron);
+LV_IMG_DECLARE(BTT_LOGO);
+
+lv_obj_t *img_open_logo;
 
 lv_obj_t *gif_AP_Config;
 lv_obj_t *gif_Home;
@@ -138,3 +141,10 @@ void init_gif_voron_display() {
   lv_gif_set_src(gif_voron, &Voron);
   lv_obj_align(gif_voron, LV_ALIGN_CENTER, 0, 0);
 }
+
+void init_img_open_logo_display() {
+  img_open_logo = lv_img_create(lv_scr_act());
+  lv_img_set_src(img_open_logo, &BTT_LOGO);
+  lv_obj_align(img_open_logo, LV_ALIGN_CENTER, 0, 0);
+}
+
