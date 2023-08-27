@@ -171,8 +171,8 @@ void open_task_conv(lv_timer_t *timer) {
 void Open_display_init() {
 
   if (wifi_ap_config_flg == 1) {
-    update_gif_AP_Config_back_display();
-    update_gif_AP_Config_display();
+    init_gif_AP_Config_back_display();
+    init_gif_AP_Config_display();
     exist_object_screen_flg = 20;
     screen_begin_dis_flg = 1;
   } else {

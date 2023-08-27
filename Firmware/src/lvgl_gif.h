@@ -45,25 +45,8 @@ void init_gif_ext_temp_display();
 void init_gif_OK_display();
 void init_gif_voron_display();
 
-void update_gif_AP_Config_display();
-void update_gif_Home_display();
-void update_gif_levelling_display();
-void update_gif_wait_display();
-
-void update_gif_Standby_display();
-void update_gif_BeforePrinting_display();
-void update_gif_AfterPrinting_display();
-void update_gif_Printing_display();
-void update_gif_PrintComplete_display();
-
-void update_gif_AP_Config_back_display();
-void update_gif_wait_back_display();
-
-void update_gif_bed_temp_display();
-void update_gif_ext_temp_display();
-
-void update_gif_OK_display();
-void update_gif_voron_display();
+void init_gif_AP_Config_back_display();
+void init_gif_wait_back_display();
 
 #ifdef __cplusplus
 } /* extern "C" */
