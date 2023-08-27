@@ -8,9 +8,6 @@ extern "C" { // extern
 
 #include <lvgl.h>
 
-extern lv_obj_t *gif_White_back;
-extern lv_obj_t *img_black_back;
-
 extern lv_obj_t *gif_AP_Config_back;
 extern lv_obj_t *gif_wait_back;
 
@@ -36,8 +33,6 @@ void init_gif_Home_display();
 void init_gif_levelling_display();
 void init_gif_wait_display();
 
-void init_gif_White_back_display();
-// void init_gif_black_back_display();
 void init_gif_Standby_display();
 void init_gif_BeforePrinting_display();
 void init_gif_AfterPrinting_display();
@@ -55,8 +50,6 @@ void update_gif_Home_display();
 void update_gif_levelling_display();
 void update_gif_wait_display();
 
-void update_gif_White_back_display();
-// void update_gif_black_back_display();
 void update_gif_Standby_display();
 void update_gif_BeforePrinting_display();
 void update_gif_AfterPrinting_display();

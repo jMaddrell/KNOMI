@@ -1,7 +1,6 @@
 #include <EEPROM.h>
 #include <WiFiUser.h>
 #include <key.h>
-#include <test.h>
 
 uint8_t KeyDownFlag = 0;
 
@@ -106,16 +105,6 @@ int KeyMessageProc(uint8_t KeyMessage) {
   case KEY_1_UP:
     KeyDownFlag = 0; // 按键已松开
 
-    test_key_timer_cnt = 0;
-    test_key_cnt++; // 1秒内短按3次，定时器自动清零 Short press counter withing
-                    // 1sec
-
-    // Short press three times to toggle test mode...
-    if (test_key_cnt >= 3) {
-      test_key_cnt = 0;
-      test_mode_flag = !test_mode_flag;
-      Serial.println("\nToggling test mode");
-    }
     break;
 
   default:

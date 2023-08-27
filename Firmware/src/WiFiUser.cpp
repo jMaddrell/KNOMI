@@ -1,7 +1,6 @@
 #include "WiFiUser.h"
 #include <Preferences.h>
 #include <lvgl_gui.h>
-#include <test.h>
 
 const byte DNS_PORT = 53; // 设置DNS端口号
 
@@ -294,11 +293,6 @@ void connectToWiFi(int timeOut_s) {
       wifi_connect_fail = 1;
       return; // 跳出 防止无限初始化
     }
-
-    if (test_mode_flag) { // 测试模式直接退出
-
-      return;
-    }
   }
 
   if (WiFi.status() == WL_CONNECTED) // 如果连接成功
@@ -337,16 +331,6 @@ void wifiConfig() {
   }
   initDNS();
   initWebServer();
-}
-
-/*
- * 测试时使用
- */
-void wifiConfig_test() {
-  initSoftAP();
-  initDNS();
-  initWebServer();
-  scanWiFi();
 }
 
 /*

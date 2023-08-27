@@ -20,8 +20,6 @@ LV_IMG_DECLARE(PrintComplete);
 LV_IMG_DECLARE(BeforePrinting);
 LV_IMG_DECLARE(AfterPrinting);
 
-// LV_IMG_DECLARE(bc_black);
-
 LV_IMG_DECLARE(bed_temp);
 LV_IMG_DECLARE(ext_temp);
 
@@ -32,9 +30,6 @@ lv_obj_t *gif_AP_Config;
 lv_obj_t *gif_Home;
 lv_obj_t *gif_levelling;
 lv_obj_t *gif_wait;
-
-lv_obj_t *gif_White_back;
-lv_obj_t *img_black_back;
 
 lv_obj_t *gif_AP_Config_back;
 lv_obj_t *gif_wait_back;
@@ -51,36 +46,6 @@ lv_obj_t *gif_ext_temp;
 
 lv_obj_t *gif_OK;
 lv_obj_t *gif_voron;
-
-//-----------------------------------------白色背景图片对象定义-------------------------------------------//
-void init_gif_White_back_display() {
-  gif_White_back = lv_obj_create(lv_scr_act()); // 背景
-  lv_obj_center(gif_White_back);
-  lv_obj_set_size(gif_White_back, 240, 240);
-  lv_obj_set_style_bg_color(gif_White_back, lv_color_hex(0xFFFFFF), NULL);
-  lv_obj_align(gif_White_back, LV_ALIGN_CENTER, 0, 0);
-}
-
-void update_gif_White_back_display() {
-  gif_White_back = lv_obj_create(lv_scr_act()); // 背景
-  lv_obj_center(gif_White_back);
-  lv_obj_set_size(gif_White_back, 240, 240);
-  lv_obj_set_style_bg_color(gif_White_back, lv_color_hex(0xFFFFFF), NULL);
-  lv_obj_align(gif_White_back, LV_ALIGN_CENTER, 0, 0);
-}
-
-//-----------------------------------------黑色背景图片对象定义-------------------------------------------//
-// void init_gif_black_back_display() {
-//   img_black_back = lv_img_create(lv_scr_act());
-//   lv_img_set_src(img_black_back, &bc_black);
-//   lv_obj_align(img_black_back, LV_ALIGN_CENTER, 0, 0);
-// }
-
-// void update_gif_black_back_display() {
-//   img_black_back = lv_img_create(lv_scr_act());
-//   lv_img_set_src(img_black_back, &bc_black);
-//   lv_obj_align(img_black_back, LV_ALIGN_CENTER, 0, 0);
-// }
 
 void update_gif_AP_Config_back_display() {
   gif_AP_Config_back = lv_img_create(lv_scr_act());

@@ -11,14 +11,12 @@
 #include <WiFiUser.h>
 #include <iostream>
 #include <key.h>
-
 #include <lvgl.h>
 #include <lvgl_gif.h>
 #include <lvgl_gui.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <test.h>
 
 uint16_t bedtemp_actual = 0;
 uint16_t bedtemp_target = 0;
@@ -47,7 +45,6 @@ uint32_t httprequest_nowtime = 0;
 uint32_t httprequest_nexttime = 0;
 
 Ticker timer1;
-Ticker timer2;
 
 static lv_disp_draw_buf_t draw_buf;    // 定义显示器变量
 static lv_color_t buf[TFT_WIDTH * 10]; // 定义刷新缓存
@@ -476,50 +473,33 @@ void timer1_cb() {
   KeyScan();
 }
 
-void timer2_cb() // 短按清零计时
-{
-  test_key_timer_cnt++;
-  if (test_key_timer_cnt > 10) {
-    test_key_timer_cnt = 0;
-    test_key_cnt = 0;
-  }
-}
-
 void delete_exist_object() {
   if (exist_object_screen_flg == 1) { // del screen1
 
-    lv_obj_del(img_black_back);
     lv_obj_del(label_print_progress);
     lv_obj_del(arc_print_progress);
   } else if (exist_object_screen_flg == 7) {
 
-    lv_obj_del(img_black_back);
     lv_obj_del(gif_Standby);
   } else if (exist_object_screen_flg == 9) {
 
-    lv_obj_del(img_black_back);
     lv_obj_del(gif_Printing);
   } else if (exist_object_screen_flg == 12) {
 
-    lv_obj_del(img_black_back);
     lv_obj_del(gif_ext_temp);
     lv_obj_del(label_ext_actual_temp);
     lv_obj_del(label_ext_target_temp);
   } else if (exist_object_screen_flg == 14) {
 
-    lv_obj_del(img_black_back);
     lv_obj_del(gif_OK);
   } else if (exist_object_screen_flg == 15) {
 
-    lv_obj_del(img_black_back);
     lv_obj_del(gif_voron);
   } else if (exist_object_screen_flg == 18) {
 
-    lv_obj_del(img_black_back);
     lv_obj_del(gif_BeforePrinting);
   } else if (exist_object_screen_flg == 19) {
 
-    lv_obj_del(img_black_back);
     lv_obj_del(gif_AfterPrinting);
   } else if (exist_object_screen_flg == 20) {
 
@@ -527,11 +507,9 @@ void delete_exist_object() {
     lv_obj_del(gif_AP_Config);
   } else if (exist_object_screen_flg == 21) {
 
-    lv_obj_del(img_black_back);
     lv_obj_del(gif_Home);
   } else if (exist_object_screen_flg == 22) {
 
-    lv_obj_del(img_black_back);
     lv_obj_del(gif_levelling);
   } else if (exist_object_screen_flg == 23) {
 
@@ -580,7 +558,6 @@ void Display_Object_Init() {
   lv_obj_del(label_fan_speed);
   lv_obj_del(bar_fan_speed);
 
-  // lv_obj_del(img_black_back);
   lv_obj_del(gif_Standby);
 
   exist_object_screen_flg = 0;
@@ -613,7 +590,6 @@ void setup() {
   timer1.attach(
       0.001,
       timer1_cb); // 定时0.001s，即1ms，回调函数为timer1_cb，并启动定时器
-  timer2.attach(0.1, timer2_cb);
 
   if (wifi_ap_config_flg == 1) {
     wifiConfig(); // 开始配网功能
@@ -624,37 +600,7 @@ void loop() {
   // lv_tick_inc(1);/* le the GUI do its work */
   lv_task_handler();
 
-  //----------------测试模式，搜索在线网络------------------//
-  if (test_mode_flag) {
-
-    screen_begin_dis_flg = 0;
-
-    delay(100);
-    update_blue_back_display();
-    lv_task_handler();
-    delay(4000);
-    lv_obj_del(img_blue_test);
-
-    delay(100);
-    init_gif_White_back_display();
-    update_label_scan_networks_test();
-    lv_task_handler();
-    delay(100);
-
-    wifiConfig_test();
-    delay(100);
-
-    update_label_networksID_test();
-
-    while (1) {
-      lv_task_handler();
-      delay(10);
-    }
-  }
-
-  // TODO: Exit test mode clear screen?
-
-  if ((screen_begin_dis_flg == 1) && !test_mode_flag) {
+  if (screen_begin_dis_flg == 1) {
     //-------------HTTP请求-----------------------//
     httprequest_nowtime = millis();
     if (httprequest_nowtime > httprequest_nexttime) {
@@ -846,7 +792,7 @@ void loop() {
       if (timer_contne > 0)
         timer_contne--; // 显示计时
 
-      if ((wifi_ap_config_flg == 0) && !test_mode_flag) {
+      if (wifi_ap_config_flg == 0) {
 
         if ((display_step == 2) && (timer_contne == 0)) { // Standby
           timer_contne = 5;
