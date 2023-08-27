@@ -13,7 +13,7 @@ src/ext_temp.c
 src/levelling.c
 src/wait.c
 src/generated
-GIFS/
+images/
 __pycache__/
 *.code-workspace
 cmake-build-debug/
