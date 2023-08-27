@@ -5,7 +5,6 @@
 #include <lvgl.h>
 #include <lvgl_gif.h>
 #include <lvgl_gui.h>
-#include <lvgl_logo_btt.h>
 
 // 显示刷新定时器
 lv_timer_t *update_timer = NULL;
